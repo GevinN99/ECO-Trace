@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
+const AdminSchema = new mongoose.Schema({
     userId: {
         type: String,
         unique: true,
@@ -13,11 +13,6 @@ const userSchema = new mongoose.Schema({
     lastName: {
         type: String,
     },
-    type: {
-        type: String,
-        enum: ['MRF', 'CEA', 'Admin'],
-        required: true,
-    },
     userName: {
         type: String,
         required: true,
@@ -29,6 +24,6 @@ const userSchema = new mongoose.Schema({
     },
 });
 
-const User = mongoose.model('User', userSchema);
+const Admin = mongoose.model('Admin', AdminSchema);
 
-module.exports = User;
+module.exports = Admin;
