@@ -184,9 +184,21 @@ section .container > *{
     transform: translateY(-50px);
 }
 
-.imgContainer{
+.imgContainer {
     transform: translateY(50px);
+    position: relative;
+    width: 400px; /* Adjust the width of the box as needed */
+    border: none;
+    border-radius: 30px;
+    padding: 2%;
+    margin-top: 5%;
+    margin-inside: 10%;
+    box-shadow: #8bff8e 5px 5px 20px;
+    margin-bottom: 50px;
+    background-image: url('../../assets/images/Recycle-bg.jpg'); /* Add this line */
+    background-size: cover; /* Add this line to ensure the image covers the container */
 }
+
 
 .title{
     font-weight: 600;

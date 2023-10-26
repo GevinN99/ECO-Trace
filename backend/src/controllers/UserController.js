@@ -1,16 +1,59 @@
+bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const saltRounds = 10;
 
 class UserController {
-    async addNewUser(req, res) {
+    async register(req, res) {
         try {
-            const { firstName, lastName, type, user_password } = req.body;
-            const newUser = new User({
+            const { firstName, lastName, type, userName, password } = req.body;
+            const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+            let idPrefix = '';
+            switch (type) {
+                case 'Admin':
+                    idPrefix = 'AD';
+                    break;
+                case 'CEA':
+                    idPrefix = 'CEA';
+                    break;
+                case 'MRF':
+                    idPrefix = 'MRF';
+                    break;
+                default:
+                    idPrefix = '';
+            }
+
+            let tempUserName = userName;
+            let count = 1;
+            let user = await User.findOne({ userName: tempUserName });
+            while (user) {
+                tempUserName = `${userName}-${Math.floor(Math.random() * 100) + 1}`;
+                user = await User.findOne({ userName: tempUserName });
+                count++;
+                if (count > 100) {
+                    return res.status(400).json({ status: 'error', message: 'Cannot generate a unique username' });
+                }
+            }
+
+            const paddedCount = (count + 1).toString().padStart(4, '0');
+            const userId = idPrefix + paddedCount;
+
+            const values = {
                 firstName,
                 lastName,
                 type,
-                user_password,
-            });
-            await newUser.save();
+                userName: tempUserName,
+                password: hashedPassword,
+                userId
+            };
+
+            const existingUser = await User.findOne({ userId });
+            if (existingUser) {
+                return res.status(400).json({ status: 'error', message: 'User ID already exists' });
+            }
+
+            await User.create(values);
             res.status(200).json({ status: 'success', message: 'User Added.' });
         } catch (err) {
             console.error(err);
@@ -18,29 +61,29 @@ class UserController {
         }
     }
 
-    async getAllUsers(req, res) {
-        try {
-            const users = await User.find();
-            res.json(users);
-        } catch (err) {
-            console.error(err);
-            res.status(500).json({ status: 'error', message: 'Error with fetching data' });
-        }
-    }
 
-    async getUserById(req, res) {
+    async login(req, res) {
+        const {userName, password} = req.body;
         try {
-            const userId = req.params.id;
-            const user = await User.findById(userId);
+            const user = await User.findOne({userName});
             if (!user) {
                 return res.status(404).json({ status: 'error', message: 'User not found' });
             }
-            res.json(user);
+
+            const validPassword = await bcrypt.compare(password, user.password);
+            if (!validPassword) {
+                return res.status(401).json({status: 'error', message: 'Invalid password'});
+            } else {
+                const firstName = user.firstName;
+                const token = jwt.sign({firstName}, process.env.JWT_SECRET, {expiresIn: '1d'});
+                return res.cookie('token', token, {httpOnly: true}).status(200).json({status: 'success', message: 'Login successful'});
+            }
         } catch (err) {
             console.error(err);
-            res.status(500).json({ status: 'error', message: 'Error with fetching data' });
+            res.status(500).json({status: 'error', message: 'Error with login', error: err.message});
         }
     }
+
 
     async updateUser(req, res) {
         try {
