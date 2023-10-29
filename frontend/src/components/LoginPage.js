@@ -13,14 +13,18 @@ export default function LoginPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:8070/user/login", values);
+            const response = await axios.post("http://localhost:8070/auth/login", values);
             if (response.data.status === "success") {
                 navigate('/home');
             } else {
                 alert(response.data.message);
             }
         } catch (error) {
+            console.error(error);
             if (error.response) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
                 alert(error.response.data.message);
             } else if (error.request) {
                 console.log(error.request);
@@ -45,6 +49,7 @@ export default function LoginPage() {
                         <input
                             type="text"
                             name="userName"
+                            placeholder='Enter User-Name'
                             value={values.userName}
                             onChange={handleInputChange}
                             className="form-control"

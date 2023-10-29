@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react';
-import mountain1 from '../assets/images/m1.png';
-import mountain2 from '../assets/images/m2.png';
-import mountain3 from '../assets/images/m3.png';
-import sky from '../assets/images/bg-img.png';
-import image from '../assets/images/Recycle-bg.jpg';
-import './CSS/WelcomePage.css';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 import {Link} from "react-router-dom";
+import mountain1 from '../assets/images/m1.png?lqip';
+import mountain2 from '../assets/images/m2.png?lqip';
+import mountain3 from '../assets/images/m3.png?lqip';
+import sky from '../assets/images/bg-img.png?lqip';
+import image from '../assets/images/Recycle-bg.jpg?lqip';
+import './CSS/WelcomePage.css';
 
 const WelcomePage = () => {
     useEffect(() => {

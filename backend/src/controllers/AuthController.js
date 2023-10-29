@@ -54,13 +54,28 @@ class AuthController {
 
     async ceaRegister(req, res) {
         try {
-            const {firstName, lastName, address, employeeId, occupation, userName, password} = req.body;
+            const {
+                firstName,
+                lastName,
+                address,
+                employeeId,
+                occupation,
+                userName,
+                password
+            } = req.body;
             const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+            // Check if the username already exists in the database
+            let user = await CEA.findOne({userName: userName});
+
+            if (user) {
+                return res.status(400).json({status: 'error', message: 'Username already exists'});
+            }
 
             let idPrefix = 'CEA';
             let count = 1;
             let tempUserId = idPrefix + count.toString().padStart(4, '0');
-            let user = await CEA.findOne({userId: tempUserId});
+            user = await CEA.findOne({userId: tempUserId});
 
             while (user) {
                 count++;
@@ -91,6 +106,7 @@ class AuthController {
         }
     }
 
+
     async mrfRegister(req, res) {
         try {
             const {
@@ -107,10 +123,16 @@ class AuthController {
             } = req.body;
             const hashedPassword = await bcrypt.hash(password, saltRounds);
 
+            let user = await MRF.findOne({userName: userName});
+
+            if (user) {
+                return res.status(400).json({status: 'error', message: 'Username already exists'});
+            }
+
             let idPrefix = 'MRF';
             let count = 1;
             let tempUserId = idPrefix + count.toString().padStart(4, '0');
-            let user = await MRF.findOne({userId: tempUserId});
+            user = await MRF.findOne({userId: tempUserId});
 
             while (user) {
                 count++;
@@ -179,7 +201,13 @@ class AuthController {
             }
         } catch (err) {
             console.error(err);
-            res.status(500).json({status: 'error', message: 'Error with login', error: err.message});
+            if (err.name === 'MongoError') {
+                res.status(500).json({status: 'error', message: 'Database Error', error: err.message});
+            } else if (err.name === 'JsonWebTokenError') {
+                res.status(500).json({status: 'error', message: 'JWT Error', error: err.message});
+            } else {
+                res.status(500).json({status: 'error', message: 'Unknown Server Error', error: err.message});
+            }
         }
     }
 

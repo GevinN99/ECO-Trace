@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import axios from "axios";
 
-export default function SignupPage() {
+export default function CreateNewAdminPage() {
     const [values, setValues] = useState({
         firstName: "",
         lastName: "",
@@ -93,7 +93,6 @@ export default function SignupPage() {
                             type="text"
                             placeholder="Auto-generated User Name"
                             value={values.userName}
-                            readOnly
                             className="form-control"
                         />
                         <label className="form-label" htmlFor="form2Example1">
@@ -115,7 +114,7 @@ export default function SignupPage() {
                     </div>
 
                     <button type="submit" className="btn custom-btn">
-                        Sign in
+                        Register
                     </button>
                 </form>
             </div>
