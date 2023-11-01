@@ -14,7 +14,7 @@ export default function CreateNewAdminPage() {
         setValues({
             ...values,
             firstName: e.target.value,
-            userName: e.target.value + "-" + values.lastName,
+            userName: "AD-" + e.target.value + "-" + values.lastName,
         });
     };
 
@@ -22,9 +22,9 @@ export default function CreateNewAdminPage() {
         setValues({
             ...values,
             lastName: e.target.value,
-            userName: values.firstName + "-" + e.target.value,
+            userName: "AD-" + values.firstName + "-" + e.target.value,
         });
-    };
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -89,15 +89,9 @@ export default function CreateNewAdminPage() {
                     </div>
 
                     <div className="form-outline mb-4">
-                        <input
-                            type="text"
-                            placeholder="Auto-generated User Name"
-                            value={values.userName}
-                            className="form-control"
-                        />
-                        <label className="form-label" htmlFor="form2Example1">
-                            User Name
-                        </label>
+                        <input type="text" placeholder="Auto-generated User Name" value={values.userName} disabled
+                               className="form-control"/>
+                        <label className="form-label" htmlFor="form2Example1"> User Name </label>
                     </div>
 
                     <div className="form-outline mb-4">

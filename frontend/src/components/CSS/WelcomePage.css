@@ -38,7 +38,7 @@ header:after{
 .mountain1{
     position: absolute;
     bottom: -100px;
-    width: 1500px;
+    width: 100%;
     right: 0;
     z-index: 19;
 }
@@ -53,7 +53,7 @@ header:after{
 
 .mountain2{
     position: absolute;
-    width: 1100px;
+    width: 100%;
     bottom: -100px;
     left: 0;
     z-index: 18;
@@ -61,7 +61,7 @@ header:after{
 
 .mountain3{
     position: absolute;
-    width: 900px;
+    width: 100%;
     bottom: 150px;
     right: 0;
     z-index: 17;
@@ -187,7 +187,7 @@ section .container > *{
 .imgContainer {
     transform: translateY(50px);
     position: relative;
-    width: 400px; /* Adjust the width of the box as needed */
+    width: 400px;
     border: none;
     border-radius: 30px;
     padding: 2%;
@@ -195,10 +195,9 @@ section .container > *{
     margin-inside: 10%;
     box-shadow: #8bff8e 5px 5px 20px;
     margin-bottom: 50px;
-    background-image: url('../../assets/images/Recycle-bg.jpg'); /* Add this line */
-    background-size: cover; /* Add this line to ensure the image covers the container */
+    background-image: url('../../assets/images/Recycle-bg.jpg');
+    background-size: cover;
 }
-
 
 .title{
     font-weight: 600;
@@ -220,11 +219,12 @@ section .container > *{
 .shadow{
     position: absolute;
     bottom: 100%;
-    height: 300px;
+    height: 100px;
     width: 100%;
     left: 0;
     z-index: 20;
     background: linear-gradient(to top, #151515, transparent);
+    opacity: 50%;
 }
 
 .opacity{
@@ -286,5 +286,12 @@ section .container > *{
     .title {
         font-size: 1.2rem;
     }
+}
+
+.eco-trace-logo{
+    width: 100px;
+    height: 35px;
+    margin: 0 auto;
+    display: block;
 }
 

@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import {Link} from "react-router-dom";
-import mountain1 from '../assets/images/m1.png?lqip';
-import mountain2 from '../assets/images/m2.png?lqip';
-import mountain3 from '../assets/images/m3.png?lqip';
+import mountain1 from '../assets/images/Trees.png?lqip';
+import mountain2 from '../assets/images/B-sm.png?lqip';
+import mountain3 from '../assets/images/B-lg.png?lqip';
 import sky from '../assets/images/bg-img.png?lqip';
 import image from '../assets/images/Recycle-bg.jpg?lqip';
+import logo from '../assets/images/logo.png?lqip';
 import './CSS/WelcomePage.css';
 
 const WelcomePage = () => {
@@ -53,14 +54,12 @@ const WelcomePage = () => {
             <header>
                 <nav>
                     <div className="container">
-                        <h3 className="logo">ECO<span>Trace</span></h3>
+                        <div>
+                            <img src={logo} className="eco-trace-logo" alt="Eco-Trace"/>
+                        </div>
                         <div className="sub-container">
                             <Link to="/login">
                                 <button type="button" className="btn btn-success btn-rounded">Login</button>
-                            </Link>
-                            <div>&nbsp;</div>
-                            <Link to="/signup">
-                                <button type="button" className="btn btn-success btn-rounded">SignUp</button>
                             </Link>
                         </div>
                     </div>
@@ -83,10 +82,7 @@ const WelcomePage = () => {
                             About Eco-Trace
                             <div className="border"></div>
                         </h3>
-                        <p className="text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eaque officiis
-                            quos expedita ipsa, a quidem inventore voluptates debitis accusamus tenetur qui et voluptas
-                            dicta, culpa earum, doloribus odio consectetur consequuntur soluta quasi nobis! Deserunt
-                            voluptatum reiciendis iure expedita sequi quisquam laboriosam temporibus exercitationem.</p>
+                        <p className="text">ECO-TRACE, a comprehensive Recyclables Collection Tracking Application that streamlines data collection processes and empowers governmental authorities with real-time insights into waste collection progress.</p>
                     </div>
 
                     <div className="imgContainer opacity">
