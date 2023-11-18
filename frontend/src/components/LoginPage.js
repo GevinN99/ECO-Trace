@@ -15,7 +15,21 @@ export default function LoginPage() {
         try {
             const response = await axios.post("http://localhost:8070/auth/login", values);
             if (response.data.status === "success") {
-                navigate('/home');
+                const { role } = response.data;
+                switch (role) {
+                    case 'Admin':
+                        navigate('/AdminDashboard');
+                        break;
+                    case 'MRF':
+                        navigate('/MRFDashboard');
+                        break;
+                    case 'CEA':
+                        navigate('/CEADashboard');
+                        break;
+                    default:
+                        navigate('/home');
+                        break;
+                }
             } else {
                 alert(response.data.message);
             }
@@ -44,7 +58,6 @@ export default function LoginPage() {
             <div className="form-box">
                 <div className="form-image"></div>
                 <form onSubmit={handleSubmit}>
-
                     <div className="form-outline mb-4">
                         <input
                             type="text"

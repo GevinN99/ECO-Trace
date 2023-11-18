@@ -6,6 +6,9 @@ import WelcomePage from "./components/WelcomePage";
 import CreateNewAdminPage from "./components/CreateNewAdminPage";
 import CreateMRFPage from "./components/CreateMRFPage";
 import CreateCEAPage from "./components/CreateCEAPage";
+import AdminDashBoard from "./components/AdminDashBoard";
+import MRFDashBoard from "./components/MRFDashBoard";
+import CEADashBoard from "./components/CEADashBoard";
 
 function App() {
   return (
@@ -17,6 +20,10 @@ function App() {
             <Route path="/" element={<WelcomePage/>}/>
             <Route path="/createmrf" element={<CreateMRFPage/>}/>
             <Route path="/createcea" element={<CreateCEAPage/>}/>
+            <Route path="/AdminDashboard" element={<AdminDashBoard/>}/>
+            <Route path="/CEADashboard" element={<CEADashBoard/>}/>
+            <Route path="/MRFDashBoard" element={<MRFDashBoard/>}/>
+
         </Routes>
       </BrowserRouter>
   );

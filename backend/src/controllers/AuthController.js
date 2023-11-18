@@ -167,49 +167,55 @@ class AuthController {
     }
 
     async login(req, res) {
-        const {userName, password} = req.body;
+        const { userName, password } = req.body;
         try {
-            const mrfUser = await MRF.findOne({userName});
-            const ceaUser = await CEA.findOne({userName});
-            const adminUser = await Admin.findOne({userName});
+            const mrfUser = await MRF.findOne({ userName });
+            const ceaUser = await CEA.findOne({ userName });
+            const adminUser = await Admin.findOne({ userName });
 
             let user;
+            let role;
             if (mrfUser) {
                 user = mrfUser;
+                role = 'MRF';
             } else if (ceaUser) {
                 user = ceaUser;
+                role = 'CEA';
             } else if (adminUser) {
                 user = adminUser;
+                role = 'Admin';
             } else {
-                return res.status(404).json({status: 'error', message: 'User not found'});
+                return res.status(404).json({ status: 'error', message: 'User not found' });
             }
 
             if (!user.password) {
-                return res.status(401).json({status: 'error', message: 'Password not set for the user'});
+                return res.status(401).json({ status: 'error', message: 'Password not set for the user' });
             }
 
             const validPassword = await bcrypt.compare(password, user.password);
             if (!validPassword) {
-                return res.status(401).json({status: 'error', message: 'Invalid password'});
+                return res.status(401).json({ status: 'error', message: 'Invalid password' });
             } else {
                 const firstName = user.firstName;
-                const token = jwt.sign({firstName}, process.env.JWT_SECRET, {expiresIn: '1d'});
-                return res.cookie('token', token, {httpOnly: true}).status(200).json({
+                const token = jwt.sign({ firstName, role }, process.env.JWT_SECRET, { expiresIn: '1d' });
+                return res.cookie('token', token, { httpOnly: true }).status(200).json({
                     status: 'success',
-                    message: 'Login successful'
+                    message: 'Login successful',
+                    role,
                 });
             }
         } catch (err) {
             console.error(err);
             if (err.name === 'MongoError') {
-                res.status(500).json({status: 'error', message: 'Database Error', error: err.message});
+                res.status(500).json({ status: 'error', message: 'Database Error', error: err.message });
             } else if (err.name === 'JsonWebTokenError') {
-                res.status(500).json({status: 'error', message: 'JWT Error', error: err.message});
+                res.status(500).json({ status: 'error', message: 'JWT Error', error: err.message });
             } else {
-                res.status(500).json({status: 'error', message: 'Unknown Server Error', error: err.message});
+                res.status(500).json({ status: 'error', message: 'Unknown Server Error', error: err.message });
             }
         }
     }
+
 
 }
 
