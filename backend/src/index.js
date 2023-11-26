@@ -29,6 +29,15 @@ connectToDatabase()
 const AuthRoutes = require('./routes/AuthRoutes');
 app.use('/auth', AuthRoutes);
 
+const CEARoutes = require('./routes/CEARoutes');
+app.use('/CEA', CEARoutes);
+
+const AdminRoutes = require('./routes/AdminRoutes');
+app.use('/Admin', AdminRoutes);
+
+const MRFRoutes = require('./routes/MRFRoutes');
+app.use('/MRF', MRFRoutes);
+
 /* Connect to Express Server */
 const PORT = process.env.PORT || 8070;
 

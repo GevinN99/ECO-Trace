@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import "./CSS/LoginPage.css";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 export default function LoginPage() {
     const [values, setValues] = useState({
@@ -9,6 +9,8 @@ export default function LoginPage() {
         password: "",
     });
     const navigate = useNavigate();
+
+    axios.defaults.withCredentials = true;
 
     const handleSubmit = async (e) => {
         e.preventDefault();

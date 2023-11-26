@@ -166,13 +166,47 @@ class AuthController {
         }
     }
 
+    // async verifyUser(req, res, next) {
+    //     try {
+    //         const token = req.cookies.token;
+    //         if (!token) {
+    //             return res.status(401).json({status: 'error', message: 'Unauthorized'});
+    //         }
+    //         req.user = jwt.verify(token, process.env.JWT_SECRET);
+    //         next();
+    //     } catch (err) {
+    //         console.error(err);
+    //         res.status(500).json({status: 'error', message: 'Error with Verifying User'});
+    //     }
+    // }
+
+    async verifyUser(req, res, next) {
+        const token = req.cookies.token;
+        if (!token) {
+            return res.status(401).json({status: 'error', message: 'Unauthorized'});
+        } else {
+            jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).json({status: 'error', message: 'Error with Verifying User'});
+                } else {
+                    req.user = decoded;
+                    next();
+                }
+            });
+        }
+    }
+
+    logout(req, res) {
+        res.clearCookie('token').json({status: 'success', message: 'Logout successful'});
+    }
+
     async login(req, res) {
         const { userName, password } = req.body;
         try {
             const mrfUser = await MRF.findOne({ userName });
             const ceaUser = await CEA.findOne({ userName });
             const adminUser = await Admin.findOne({ userName });
-
             let user;
             let role;
             if (mrfUser) {
@@ -187,18 +221,25 @@ class AuthController {
             } else {
                 return res.status(404).json({ status: 'error', message: 'User not found' });
             }
-
             if (!user.password) {
                 return res.status(401).json({ status: 'error', message: 'Password not set for the user' });
             }
-
             const validPassword = await bcrypt.compare(password, user.password);
             if (!validPassword) {
                 return res.status(401).json({ status: 'error', message: 'Invalid password' });
             } else {
                 const firstName = user.firstName;
-                const token = jwt.sign({ firstName, role }, process.env.JWT_SECRET, { expiresIn: '1d' });
-                return res.cookie('token', token, { httpOnly: true }).status(200).json({
+                const lastName = user.lastName;
+                const userName = user.userName;
+                const userId = user.userId;
+                const token = jwt.sign({
+                    firstName,
+                    lastName,
+                    userName,
+                    userId,
+                    role
+                }, process.env.JWT_SECRET, {expiresIn: '1d'});
+                return res.cookie('token', token, {httpOnly: true}).status(200).json({
                     status: 'success',
                     message: 'Login successful',
                     role,

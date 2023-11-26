@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 
-export default function CreateNewAdminPage() {
+export default function CreateAdminPage() {
     const [values, setValues] = useState({
         firstName: "",
         lastName: "",
