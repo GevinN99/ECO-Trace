@@ -17,6 +17,9 @@ export default function LoginPage() {
         try {
             const response = await axios.post("http://localhost:8070/auth/login", values);
             if (response.data.status === "success") {
+
+                localStorage.setItem('userId', response.data.userId);
+
                 const { role } = response.data;
                 switch (role) {
                     case 'Admin':

@@ -166,20 +166,6 @@ class AuthController {
         }
     }
 
-    // async verifyUser(req, res, next) {
-    //     try {
-    //         const token = req.cookies.token;
-    //         if (!token) {
-    //             return res.status(401).json({status: 'error', message: 'Unauthorized'});
-    //         }
-    //         req.user = jwt.verify(token, process.env.JWT_SECRET);
-    //         next();
-    //     } catch (err) {
-    //         console.error(err);
-    //         res.status(500).json({status: 'error', message: 'Error with Verifying User'});
-    //     }
-    // }
-
     async verifyUser(req, res, next) {
         const token = req.cookies.token;
         if (!token) {
@@ -243,6 +229,7 @@ class AuthController {
                     status: 'success',
                     message: 'Login successful',
                     role,
+                    userId,
                 });
             }
         } catch (err) {
@@ -255,7 +242,8 @@ class AuthController {
                 res.status(500).json({ status: 'error', message: 'Unknown Server Error', error: err.message });
             }
         }
-    }
+    };
+
 
 
 }

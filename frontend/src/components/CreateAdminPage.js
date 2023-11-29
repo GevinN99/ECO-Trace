@@ -29,7 +29,7 @@ export default function CreateAdminPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:8070/user/register", values);
+            const response = await axios.post("http://localhost:8070/auth/adminRegister", values);
             console.log(response);
             localStorage.setItem("token", response.data.token);
             window.location.href = "/login";
