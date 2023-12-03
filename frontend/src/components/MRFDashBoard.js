@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import moment from 'moment';
 import Chart from "react-apexcharts";
 import {CgProfile} from "react-icons/cg";
 import {FaHome} from "react-icons/fa";
@@ -9,43 +10,36 @@ import "./CSS/MRFPage.css";
 class LineChart extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             options: {
                 chart: {
                     id: "line"
                 },
                 xaxis: {
-                    categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+                    categories: []
                 },
             },
-            series: [
-                {
-                    name: "PET",
-                    data: [30, 60, 45, 20, 49, 60, 70, 91]
-                },
-                {
-                    name: "HDPE",
-                    data: [40, 70, 75, 50, 49, 60, 70, 91]
-                },
-                {
-                    name: "LDPE",
-                    data: [50, 50, 35, 20, 49, 60, 70, 91]
-                },
-                {
-                    name: "PP",
-                    data: [60, 40, 65, 70, 49, 60, 70, 91]
-                },
-                {
-                    name: "PS",
-                    data: [70, 30, 15, 20, 49, 60, 70, 91]
-                },
-                {
-                    name: "PVC",
-                    data: [80, 40, 45, 50, 49, 60, 70, 91]
-                }
-            ]
+            series: []
         };
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        if (props.data !== state.prevData) {
+            return {
+                prevData: props.data,
+                options: {
+                    ...state.options,
+                    xaxis: {
+                        categories: props.data ? Object.keys(props.data).map(date => {
+                            // Change the format to 'DD-MM' or 'MM-DD' as needed
+                            return moment(date, 'YYYY-MM-DD').format('DD-MM');
+                        }) : []
+                    }
+                },
+                series: props.data ? Object.entries(props.data).map(([name, data]) => ({ name, data: Object.values(data) })) : []
+            };
+        }
+        return null;
     }
 
     render() {
@@ -53,12 +47,7 @@ class LineChart extends React.Component {
             <div className="LineChart">
                 <div className="row">
                     <div className="mixed-chart">
-                        <Chart
-                            options={this.state.options}
-                            series={this.state.series}
-                            type="line"
-                            width="500"
-                        />
+                        <Chart options={this.state.options} series={this.state.series} type="line" width="500" />
                     </div>
                 </div>
             </div>
@@ -66,20 +55,18 @@ class LineChart extends React.Component {
     }
 }
 
+
+
 export default function MRFDashBoard() {
     const [auth, setAuth] = useState(false);
     const [message, setMessage] = useState("");
-    const [userId, setUserId] = useState("");
     const navigate = useNavigate();
     const [showNav, setShowNav] = useState(false);
-
     axios.defaults.withCredentials = true;
 
     useEffect(() => {
         axios.get("http://localhost:8070/MRF/MRFDashBoard").then((response) => {
             if (response.data.status === "success") {
-                setAuth(true);
-                setUserId(response.data.userId);
                 navigate("/MRFDashboard");
             } else {
                 setAuth(false);
@@ -90,11 +77,78 @@ export default function MRFDashBoard() {
         });
     }, []);
 
+    const [dailySums, setDailySums] = useState({ PET: 0, HDPE: 0, LDPE: 0, PP: 0, PS: 0, PVC: 0 });
+
+    useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+            axios.get(`http://localhost:8070/MRF/getSumLastDay/${userId}`)
+                .then((response) => {
+                    if (response.data.status === 'success') {
+                        setDailySums(response.data.data);
+                    } else {
+                        console.error(response.data.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+    }, []);
+
+    const [sumsLast7Days, setSumsLast7Days] = useState({});
+
+    useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+            axios.get(`http://localhost:8070/MRF/getSumsLast7Days/${userId}`)
+                .then((response) => {
+                    if (response.data.status === 'success') {
+                        setSumsLast7Days(response.data.data);
+                    } else {
+                        console.error(response.data.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+    }, []);
+
+    const [mrfProfile, setMrfProfile] = useState({});
+
+    useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+            axios.get(`http://localhost:8070/MRF/viewMRFProfile/${userId}`)
+                .then((response) => {
+                    if (response.data.status === 'success') {
+                        setMrfProfile(response.data.data);
+                    } else {
+                        console.error(response.data.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+    }, []);
+
+    // Transform the data
+    const transformedData = Object.entries(sumsLast7Days).reduce((acc, [date, categories]) => {
+        Object.entries(categories).forEach(([category, sum]) => {
+            if (!acc[category]) {
+                acc[category] = {};
+            }
+            acc[category][date] = sum;
+        });
+        return acc;
+    }, {});
+
     const handleLogout = () => {
         axios.get("http://localhost:8070/auth/logout").then((response) => {
             if (response.data.status === "success") {
                 setAuth(false);
-                setUserId("");
                 navigate("/login");
             } else {
                 console.error(response.data.message);
@@ -103,6 +157,27 @@ export default function MRFDashBoard() {
             console.error(error);
         });
     };
+
+    const [sumsEachDayLastMonth, setSumsEachDayLastMonth] = useState({});
+
+    useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+            axios.get(`http://localhost:8070/MRF/getSumsEachDayLastMonth/${userId}`)
+                .then((response) => {
+                    if (response.data.status === 'success') {
+                        setSumsEachDayLastMonth(response.data.data);
+                    } else {
+                        console.error(response.data.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+    }, []);
+
+
 
     return (
         <div className={`MRFDashBoard ${auth ? "menuDisplayed" : ""}`}>
@@ -131,7 +206,8 @@ export default function MRFDashBoard() {
                         </div>
 
                         <div className="col-1 ">
-                            <button className="header-nav-btn btn btn-outline-light " onClick={() => navigate("/")}>
+                            <button className="header-nav-btn btn btn-outline-light "
+                                    onClick={() => navigate("/AddCategorizedData")}>
                                 Categorized
                             </button>
                         </div>
@@ -146,17 +222,18 @@ export default function MRFDashBoard() {
                     </div>
 
                     {showNav ?
-                        <div className="nav-links">
-                            <ul>
-                                <li>
-                                    <a href='/'>Home</a>
-                                </li>
-                                <li>
-                                    <a href='/'>About</a>
-                                </li>
-                                <li>
-                                    <a href='/'>Pages</a>
-                                </li>
+                        <div className="nav-links text-light">
+                            <ul className="list-unstyled">
+                                <li className="text-center"><span>{`User ID: ${mrfProfile.userId}`}</span></li>
+                                <li className="text-center"><span>{`User Name: ${mrfProfile.userName}`}</span></li>
+                                <li className="text-center"><span>{`First Name: ${mrfProfile.firstName}`}</span></li>
+                                <li className="text-center"><span>{`Last Name: ${mrfProfile.lastName}`}</span></li>
+                                <li className="text-center"><span>{`District: ${mrfProfile.district}`}</span></li>
+                                <li className="text-center"><span>{`Local Authority: ${mrfProfile.localAuthority}`}</span></li>
+                                <li className="text-center"><span>{`Id/Passport Number: ${mrfProfile.idOrPassportNumber}`}</span></li>
+                                <li className="text-center"><span>{`Collecting Location Address: ${mrfProfile.collectingLocationAddress}`}</span></li>
+                                <li className="text-center"><span>{`Telephone: ${mrfProfile.telephone}`}</span></li>
+                                <li className="text-center"><span>{`GPS Location: ${mrfProfile.gpsLocation}`}</span></li>
                             </ul>
                         </div>
                         :
@@ -201,32 +278,32 @@ export default function MRFDashBoard() {
                                 <tr>
                                     <th scope="row">1</th>
                                     <td>Polyethylene terephthalate (PET)</td>
-                                    <td>01</td>
+                                    <td>{dailySums.PET}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">2</th>
                                     <td>High-density polyethylene (HDPE)</td>
-                                    <td>01</td>
+                                    <td>{dailySums.HDPE}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">3</th>
                                     <td>Low-density polyethylene (LDPE)</td>
-                                    <td>01</td>
+                                    <td>{dailySums.LDPE}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">4</th>
                                     <td>Polypropylene (PP)</td>
-                                    <td>01</td>
+                                    <td>{dailySums.PP}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">5</th>
                                     <td>Polystyrene (PS)</td>
-                                    <td>01</td>
+                                    <td>{dailySums.PS}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">6</th>
                                     <td>Polyvinyl chloride (PVC)</td>
-                                    <td>01</td>
+                                    <td>{dailySums.PVC}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -239,7 +316,7 @@ export default function MRFDashBoard() {
                             </div>
                             <div className="mrf-graph-container d-flex justify-content-center align-items-center">
                                 <div className="mrf-graph">
-                                    <LineChart/>
+                                    <LineChart data={transformedData} />
                                 </div>
                             </div>
                         </div>
@@ -252,12 +329,13 @@ export default function MRFDashBoard() {
                     <div className="row">
                         <div className="col">
                             <div className="col-md-12">
-                                <div className="mrf-container-table"> - Amounts Collected In a Month -</div>
+                                <div className="mrf-container-table">- Amounts Collected In a Month -</div>
                             </div>
                             <br/>
                             <table className="table table-striped table-hover">
                                 <thead>
                                 <tr>
+                                    <th scope="col"></th>
                                     <th scope="col">Date</th>
                                     <th scope="col">PET (Kg)</th>
                                     <th scope="col">HDPE (Kg)</th>
@@ -268,24 +346,18 @@ export default function MRFDashBoard() {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>01</td>
-                                    <td>01</td>
-                                    <td>01</td>
-                                    <td>01</td>
-                                    <td>01</td>
-                                    <td>01</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>01</td>
-                                    <td>01</td>
-                                    <td>01</td>
-                                    <td>01</td>
-                                    <td>01</td>
-                                    <td>01</td>
-                                </tr>
+                                {Object.entries(sumsEachDayLastMonth).map(([date, sums], index) => (
+                                    <tr key={index}>
+                                        <th scope="row">{index + 1}</th>
+                                        <td>{moment(date, 'YYYY-MM-DD').format('DD-MM')}</td>
+                                        <td>{sums.PET}</td>
+                                        <td>{sums.HDPE}</td>
+                                        <td>{sums.LDPE}</td>
+                                        <td>{sums.PP}</td>
+                                        <td>{sums.PS}</td>
+                                        <td>{sums.PVC}</td>
+                                    </tr>
+                                ))}
                                 </tbody>
                             </table>
                         </div>

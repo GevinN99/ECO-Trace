@@ -13,6 +13,7 @@ import CEADashBoard from "./components/CEADashBoard";
 import SupplierCollection from "./components/SupplierCollection";
 import CreateSupplier from "./components/CreateSupplier";
 import SupplierPage from "./components/SupplierPage";
+import CategoryCreation from "./components/AddCategorizedData";
 
 function App() {
     return (
@@ -30,6 +31,7 @@ function App() {
                 <Route path="/SupplierCollection" element={<SupplierCollection/>}/>
                 <Route path="/CreateSupplier" element={<CreateSupplier/>}/>
                 <Route path="/ViewAllSuppliers" element={<SupplierPage/>}/>
+                <Route path="/AddCategorizedData" element={<CategoryCreation/>}/>
             </Routes>
         </BrowserRouter>
     );
