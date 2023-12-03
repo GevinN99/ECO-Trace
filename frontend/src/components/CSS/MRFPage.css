@@ -1,7 +1,5 @@
-.header-nav{
+.header-nav {
     background-color: #272727;
-    height: 1%;
-    width: 96%;
     padding: 0.5%;
     border-radius: 30px;
     margin: 2%;
@@ -11,12 +9,12 @@ ul {
     padding: 0;
 }
 
-ul li{
+ul li {
     list-style: none;
     margin: 10px 0;
 }
 
-ul li a{
+ul li a {
     text-decoration: none;
     color: #fff;
     font-size: 16px;
@@ -26,37 +24,38 @@ ul li a{
 }
 
 ul li a:hover,
-ul li a:active{
+ul li a:active {
     background-color: #444444;
     color: #00ff10;
     display: block;
     transition: all 0.5s;
 }
 
-.mrf-nav-logo{
+.mrf-nav-logo {
     font-size: 30px;
     color: #fff;
     padding-left: 1%;
 }
 
 .mrf-nav-logo:hover,
-.mrf-nav-logo:active{
+.mrf-nav-logo:active {
     color: #00ff18;
     transition: all 0.5s;
 }
 
-.header-nav-btn{
+.header-nav-btn {
+    width: 100%;
     margin-top: 4px;
-    margin-right: 1%;
+    margin-bottom: 1%;
 }
 
-.mrf-container{
+.mrf-container {
     justify-content: center;
     align-items: center;
     margin: 2%;
     padding: 2%;
 }
 
-.mrf-container-table{
+.mrf-container-table {
     text-align: center;
 }

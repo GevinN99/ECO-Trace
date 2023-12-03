@@ -52,12 +52,12 @@ export default function CreateSupplier() {
     };
 
     return (
-        <div>
-            <div className="form-box">
-                <div className="form-image"></div>
-                <form onSubmit={handleSubmit}>
-                    {error && <div className="error-message">{error}</div>}
-                    {success && <div className="success-message">{success}</div>}
+        <div className="container d-flex justify-content-center">
+            <div className="row form-box">
+                <div className="col-12 form-image"></div>
+                <form onSubmit={handleSubmit} className="col-12">
+                    {error && <div className="alert alert-danger">{error}</div>}
+                    {success && <div className="alert alert-success">{success}</div>}
                     <div className="form-outline mb-4">
                         <label className="form-label">Supplier ID</label>
                         <input type="text" name="supplierId" value={values.supplierId} readOnly className="form-control" />
@@ -86,10 +86,11 @@ export default function CreateSupplier() {
                             <option value="temporary">Temporary</option>
                         </select>
                     </div>
-                    <button type="submit" className="btn custom-btn"> Create Supplier </button>
+                    <button type="submit" className="btn custom-btn w-100">Create Supplier</button>
                 </form>
             </div>
         </div>
     );
 }
+
 

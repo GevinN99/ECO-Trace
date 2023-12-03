@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import axios from "axios";
 
 export default function CategoryCreation() {
@@ -41,9 +41,9 @@ export default function CategoryCreation() {
     };
 
     return (
-        <div>
+        <div className="d-flex justify-content-center align-items-center" style={{height: "90vh"}}>
             <div className="form-box">
-                <div className="form-image"></div>
+                <h2 className="text-center fw-bold">Categorized Data</h2>
                 <form onSubmit={handleSubmit}>
                     {error && <div className="error-message">{error}</div>}
                     {success && <div className="success-message">{success}</div>}
@@ -71,7 +71,7 @@ export default function CategoryCreation() {
                         <label className="form-label">PVC (Kg)</label>
                         <input type="text" name="PVC" placeholder="PVC (Kg)" value={values.PVC} onChange={handleInputChange} className="form-control" />
                     </div>
-                    <button type="submit" className="btn custom-btn"> Add Category </button>
+                    <button type="submit" className="btn custom-btn">Add Category</button>
                 </form>
             </div>
         </div>

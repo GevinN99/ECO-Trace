@@ -31,7 +31,6 @@ class LineChart extends React.Component {
                     ...state.options,
                     xaxis: {
                         categories: props.data ? Object.keys(props.data).map(date => {
-                            // Change the format to 'DD-MM' or 'MM-DD' as needed
                             return moment(date, 'YYYY-MM-DD').format('DD-MM');
                         }) : []
                     }
@@ -183,43 +182,32 @@ export default function MRFDashBoard() {
         <div className={`MRFDashBoard ${auth ? "menuDisplayed" : ""}`}>
             <div id="wrapper">
                 <div className="header-nav ">
-                    <div className="row ">
-                        <div className='col-1 '>
-                            <div className="mrf-nav-logo ">
-                                <CgProfile onClick={() => setShowNav(!showNav)}/>
+                    <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+                        <div className="container-fluid">
+                            <div className="navbar-brand">
+                                <CgProfile onClick={() => setShowNav(!showNav)} className="mrf-nav-logo"/>
+                            </div>
+                            <div className="navbar-brand" onClick={() => navigate("/MRFDashBoard")}>
+                                <FaHome className="mrf-nav-logo"/>
+                            </div>
+                            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                <span className="navbar-toggler-icon"></span>
+                            </button>
+                            <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
+                                <ul className="navbar-nav">
+                                    <li className="nav-item me-2">
+                                        <button className="nav-link btn btn-outline-light" onClick={() => navigate("/SupplierCollection")}>Collected</button>
+                                    </li>
+                                    <li className="nav-item me-2">
+                                        <button className="nav-link btn btn-outline-light" onClick={() => navigate("/AddCategorizedData")}>Recycle</button>
+                                    </li>
+                                    <li className="nav-item">
+                                        <button className="nav-link btn btn-outline-danger" onClick={handleLogout}>Logout</button>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-
-                        <div className="col-1">
-                            <div className="mrf-nav-logo" onClick={() => navigate("/MRFDashBoard")}>
-                                <FaHome/>
-                            </div>
-                        </div>
-
-                        <div className="col-6 "></div>
-
-                        <div className="col-1 ">
-                            <button className="header-nav-btn btn btn-outline-light"
-                                    onClick={() => navigate("/SupplierCollection")}>
-                                Collected
-                            </button>
-                        </div>
-
-                        <div className="col-1 ">
-                            <button className="header-nav-btn btn btn-outline-light "
-                                    onClick={() => navigate("/AddCategorizedData")}>
-                                Categorized
-                            </button>
-                        </div>
-
-                        <div className="col-1"></div>
-
-                        <div className="col-1 ">
-                            <button className="header-nav-btn btn btn-outline-danger "
-                                    onClick={handleLogout}>Logout
-                            </button>
-                        </div>
-                    </div>
+                    </nav>
 
                     {showNav ?
                         <div className="nav-links text-light">

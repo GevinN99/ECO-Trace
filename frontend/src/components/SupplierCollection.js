@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import axios from "axios";
 
 export default function SupplierCollection() {
@@ -40,9 +40,10 @@ export default function SupplierCollection() {
     };
 
     return (
-        <div>
+        <div className="d-flex justify-content-center align-items-center" style={{height: "100%"}}>
             <div className="form-box">
-                <div className="form-image"></div>
+                <h1 className="text-center">Add Collection</h1>
+                <br/>
                 <form onSubmit={handleSubmit}>
                     {error && <div className="error-message">{error}</div>}
                     {success && <div className="success-message">{success}</div>}
