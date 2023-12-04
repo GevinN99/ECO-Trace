@@ -72,6 +72,7 @@ header:after{
     width: 2100px;
     bottom: 250px;
     right: 0;
+    opacity: 0;
 }
 
 nav{
