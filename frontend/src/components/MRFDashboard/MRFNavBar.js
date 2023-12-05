@@ -21,13 +21,13 @@ export default function MRFNavBar({showNav, setShowNav, handleLogout}) {
                 <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item me-2">
-                            <button className="nav-link btn btn-outline-light" onClick={() => navigate("/SupplierCollection")}>Collected</button>
+                            <button className="btn btn-outline-light" onClick={() => navigate("/SupplierCollection")}>Collected</button>
                         </li>
                         <li className="nav-item me-2">
-                            <button className="nav-link btn btn-outline-light" onClick={() => navigate("/AddCategorizedData")}>Recycle</button>
+                            <button className="btn btn-outline-light" onClick={() => navigate("/AddCategorizedData")}>Recycle</button>
                         </li>
                         <li className="nav-item">
-                            <button className="nav-link btn btn-outline-danger" onClick={handleLogout}>Logout</button>
+                            <button className="btn btn-outline-danger" onClick={handleLogout}>Logout</button>
                         </li>
                     </ul>
                 </div>

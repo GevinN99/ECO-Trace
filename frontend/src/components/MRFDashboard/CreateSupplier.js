@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import MRFNavBar from "./MRFNavBar";
+import {useNavigate} from "react-router-dom";
 
 export default function CreateSupplier() {
 
     const userId = localStorage.getItem('userId');
-
     const [values, setValues] = useState({
         supplierName: "",
         supplierId: "",
@@ -18,6 +18,7 @@ export default function CreateSupplier() {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [showNav, setShowNav] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchSupplierId = async () => {
@@ -56,10 +57,8 @@ export default function CreateSupplier() {
     return (
         <div className="container d-flex justify-content-center" style={{height: "100%"}}>
             <MRFNavBar showNav={showNav} setShowNav={setShowNav} />
-            <div className="form-box col-md-8">
-                <br/>
-                <h1 className="text-center fw-bold">Add Collection</h1>
-                <br/>
+            <div className="supplier-form-box col-md-8 p-5">
+                <h1 className="text-center fw-bold p-5">Add Collection</h1>
                 <form onSubmit={handleSubmit}>
                     {error && <div className="alert alert-danger">{error}</div>}
                     {success && <div className="alert alert-success">{success}</div>}
@@ -91,7 +90,14 @@ export default function CreateSupplier() {
                             <option value="temporary">Temporary</option>
                         </select>
                     </div>
-                    <button type="submit" className="btn custom-btn w-100">Create Supplier</button>
+                    <div className="d-grid gap-3">
+                        <div className="d-flex justify-content-center">
+                            <button type="submit" className="btn btn-dark w-100">Create Supplier</button>
+                        </div>
+                        <div className="d-flex justify-content-center">
+                            <button className="btn btn-dark w-25 mt-3" onClick={() => navigate(-1)}>Cancel</button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>

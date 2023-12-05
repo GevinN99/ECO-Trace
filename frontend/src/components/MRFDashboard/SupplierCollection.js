@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 import MRFNavBar from "./MRFNavBar";
+import {useNavigate} from "react-router-dom";
 
 export default function SupplierCollection() {
     const userId = localStorage.getItem('userId');
@@ -13,6 +14,7 @@ export default function SupplierCollection() {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [showNav, setShowNav] = useState(false);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -40,12 +42,12 @@ export default function SupplierCollection() {
     };
 
     return (
-        <div className="d-flex justify-content-center align-items-center" style={{height: "100%"}}>
+        <div className="d-flex justify-content-center align-items-center supplier-page" style={{height: "100%"}}>
             <MRFNavBar showNav={showNav} setShowNav={setShowNav}/>
-            <div className="form-box">
-                <h1 className="text-center fw-bold">Add Collection</h1>
+            <div className="supplier-form-box p-5">
                 <br/>
-                <form onSubmit={handleSubmit}>
+                <h1 className="text-center fw-bold p-3">Add Collection</h1>
+                <form onSubmit={handleSubmit} className="bg-light">
                     {error && <div className="error-message">{error}</div>}
                     {success && <div className="success-message">{success}</div>}
                     <div className="form-outline mb-4">
@@ -68,7 +70,12 @@ export default function SupplierCollection() {
                         <label className="form-label">Total Amount Paid</label>
                         <input type="text" name="amountPaid" placeholder="Total Amount Paid" value={values.amountPaid} onChange={handleInputChange} className="form-control" />
                     </div>
-                    <button type="submit" className="btn custom-btn"> Add Collection </button>
+                    <div className="d-grid gap-3">
+                        <button type="submit" className="btn btn-dark w-100 mt-3">Add Collection</button>
+                        <div className="d-flex justify-content-center">
+                            <button className="btn btn-dark w-50" onClick={() => navigate(-1)}>Cancel</button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>

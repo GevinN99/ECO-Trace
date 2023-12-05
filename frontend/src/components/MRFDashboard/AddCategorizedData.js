@@ -1,8 +1,10 @@
 import React, {useState} from "react";
 import axios from "axios";
 import MRFNavBar from "./MRFNavBar";
+import {useNavigate} from "react-router-dom";
 
 export default function CategoryCreation() {
+    const navigate = useNavigate();
     const userId = localStorage.getItem('userId');
     const [values, setValues] = useState({
         PET: "",
@@ -49,20 +51,19 @@ export default function CategoryCreation() {
     };
 
     return (
-        <div className="d-flex justify-content-center " style={{height: "90vh"}}>
+        <div className="d-flex justify-content-center vh-90">
             <MRFNavBar showNav={showNav} setShowNav={setShowNav} />
-            <div className="form-box col-md-8"> {/* Increase the width here */}
-                <h2 className="text-center fw-bold">Categorized Data</h2>
-                <br/>
+            <div className="supplier-form-box col-md-8 col-sm-12 p-5">
+                <h2 className="text-center fw-bold p-5">Categorized Data</h2>
                 <form onSubmit={handleSubmit}>
                     {error && <div className="error-message">{error}</div>}
                     {success && <div className="success-message">{success}</div>}
                     <div className="row">
-                        <div className="col-md-6 form-outline mb-4">
+                        <div className="col-md-6 col-sm-12 form-outline mb-4">
                             <label className="form-label">PET (Kg) :</label>
                             <input type="text" name="PET" placeholder="PET (Kg)" value={values.PET} onChange={handleInputChange} className="form-control" />
                         </div>
-                        <div className="col-md-6 form-outline mb-4">
+                        <div className="col-md-6 col-sm-12 form-outline mb-4">
                             <label className="form-label">HDPE (Kg) :</label>
                             <input type="text" name="HDPE" placeholder="HDPE (Kg)" value={values.HDPE} onChange={handleInputChange} className="form-control" />
                         </div>
@@ -87,7 +88,14 @@ export default function CategoryCreation() {
                             <input type="text" name="PVC" placeholder="PVC (Kg)" value={values.PVC} onChange={handleInputChange} className="form-control" />
                         </div>
                     </div>
-                    <button type="submit" className="btn custom-btn">Add Category</button>
+                    <div className="d-grid gap-3">
+                        <div className="d-flex justify-content-center">
+                            <button type="submit" className="btn btn-dark w-50 mt-3">Add Category</button>
+                        </div>
+                        <div className="d-flex justify-content-center">
+                            <button className="btn btn-dark w-25 mt-3" onClick={() => navigate(-1)}>Cancel</button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>

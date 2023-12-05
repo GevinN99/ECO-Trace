@@ -184,28 +184,28 @@ export default function MRFDashBoard() {
                     <MRFNavBar showNav={showNav} setShowNav={setShowNav} handleLogout={handleLogout}/>
 
                     {showNav ?
-                        <div className="nav-links text-light">
-                            <ul className="list-group bg-dark">
-                                <li className="list-group-item bg-dark text-center text-light">
+                        <div className="nav-links text-light p-5">
+                            <ul className=" bg-dark">
+                                <li className=" bg-dark text-center text-light">
                                     <span>{`User ID  : ${mrfProfile.userId}`}</span></li>
-                                <li className="list-group-item bg-dark text-center text-light">
+                                <li className=" bg-dark text-center text-light">
                                     <span>{`User Name    : ${mrfProfile.userName}`}</span></li>
-                                <li className="list-group-item bg-dark text-center text-light">
+                                <li className=" bg-dark text-center text-light">
                                     <span>{`First Name   : ${mrfProfile.firstName}`}</span></li>
-                                <li className="list-group-item bg-dark text-center text-light">
+                                <li className=" bg-dark text-center text-light">
                                     <span>{`Last Name    : ${mrfProfile.lastName}`}</span></li>
-                                <li className="list-group-item bg-dark text-center text-light">
+                                <li className=" bg-dark text-center text-light">
                                     <span>{`District : ${mrfProfile.district}`}</span></li>
-                                <li className="list-group-item bg-dark text-center text-light">
+                                <li className=" bg-dark text-center text-light">
                                     <span>{`Local Authority  : ${mrfProfile.localAuthority}`}</span></li>
-                                <li className="list-group-item bg-dark text-center text-light">
+                                <li className=" bg-dark text-center text-light">
                                     <span>{`Id/Passport Number   : ${mrfProfile.idOrPassportNumber}`}</span></li>
-                                <li className="list-group-item bg-dark text-center text-light">
+                                <li className=" bg-dark text-center text-light">
                                     <span>{`Collecting Location Address  : ${mrfProfile.collectingLocationAddress}`}</span>
                                 </li>
-                                <li className="list-group-item bg-dark text-center text-light">
+                                <li className=" bg-dark text-center text-light">
                                     <span>{`Telephone    : ${mrfProfile.telephone}`}</span></li>
-                                <li className="list-group-item bg-dark text-center text-light">
+                                <li className=" bg-dark text-center text-light">
                                     <span>{`GPS Location : ${mrfProfile.gpsLocation}`}</span></li>
                             </ul>
                         </div>
