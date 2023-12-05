@@ -24,20 +24,17 @@ class LineChart extends React.Component {
 
     static getDerivedStateFromProps(props, state) {
         if (props.data !== state.prevData) {
+            const firstCategoryData = Object.values(props.data)[0] || {};
+            const dates = Object.keys(firstCategoryData);
             return {
                 prevData: props.data,
                 options: {
                     ...state.options,
                     xaxis: {
-                        categories: props.data ? Object.keys(props.data).map(date => {
-                            return moment(date, 'YYYY-MM-DD').format('DD-MM');
-                        }) : []
+                        categories: dates.map(date => date.substring(5, 10))
                     }
                 },
-                series: props.data ? Object.entries(props.data).map(([name, data]) => ({
-                    name,
-                    data: Object.values(data)
-                })) : []
+                series: props.data ? Object.entries(props.data).map(([name, data]) => ({ name, data: Object.values(data) })) : []
             };
         }
         return null;
@@ -185,26 +182,28 @@ export default function CEADashBoard() {
             <div id="wrapper">
                 <div className="header-nav ">
                     <CEANavBar showNav={showNav} setShowNav={setShowNav} handleLogout={handleLogout}/>
-                    {showNav ?
-                        <div className="nav-links text-light">
-                        <ul className=" bg-dark">
-                            <li className=" bg-dark text-center text-light">
-                                <span>{`User ID  : ${ceaProfile.userId}`}</span></li>
-                            <li className=" bg-dark text-center text-light">
-                                <span>{`User Name    : ${ceaProfile.userName}`}</span></li>
-                            <li className=" bg-dark text-center text-light">
-                                <span>{`First Name   : ${ceaProfile.firstName}`}</span></li>
-                            <li className=" bg-dark text-center text-light">
-                                <span>{`Last Name    : ${ceaProfile.lastName}`}</span></li>
-                            <li className=" bg-dark text-center text-light">
-                                <span>{`Address : ${ceaProfile.address}`}</span></li>
-                            <li className=" bg-dark text-center text-light">
-                                <span>{`Employee ID  : ${ceaProfile.employeeId}`}</span></li>
-                            <li className=" bg-dark text-center text-light">
-                                <span>{`Occupation   : ${ceaProfile.occupation}`}</span></li>
-                        </ul>
-                    </div>
-                        : null }
+                    {showNav && (
+                        <div className={`bg-dark text-light p-5 position-fixed h-100 sidebar ${showNav ? 'show' : ''}`} style={{width: '300px'}}>
+                            <ul className="list-unstyled">
+                                <ul className=" bg-dark">
+                                    <li className=" bg-dark text-center text-light">
+                                        <span>{`User ID  : ${ceaProfile.userId}`}</span></li>
+                                    <li className=" bg-dark text-center text-light">
+                                        <span>{`User Name    : ${ceaProfile.userName}`}</span></li>
+                                    <li className=" bg-dark text-center text-light">
+                                        <span>{`First Name   : ${ceaProfile.firstName}`}</span></li>
+                                    <li className=" bg-dark text-center text-light">
+                                        <span>{`Last Name    : ${ceaProfile.lastName}`}</span></li>
+                                    <li className=" bg-dark text-center text-light">
+                                        <span>{`Address : ${ceaProfile.address}`}</span></li>
+                                    <li className=" bg-dark text-center text-light">
+                                        <span>{`Employee ID  : ${ceaProfile.employeeId}`}</span></li>
+                                    <li className=" bg-dark text-center text-light">
+                                        <span>{`Occupation   : ${ceaProfile.occupation}`}</span></li>
+                                </ul>
+                            </ul>
+                        </div>
+                    )}
                 </div>
                 <div className="cea-container">
                     <div className="row">

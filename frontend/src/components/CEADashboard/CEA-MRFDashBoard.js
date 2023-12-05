@@ -26,14 +26,14 @@ class LineChart extends React.Component {
 
     static getDerivedStateFromProps(props, state) {
         if (props.data !== state.prevData) {
+            const firstCategoryData = Object.values(props.data)[0] || {};
+            const dates = Object.keys(firstCategoryData);
             return {
                 prevData: props.data,
                 options: {
                     ...state.options,
                     xaxis: {
-                        categories: props.data ? Object.keys(props.data).map(date => {
-                            return moment(date, 'YYYY-MM-DD').format('DD-MM');
-                        }) : []
+                        categories: dates.map(date => date.substring(5, 10))
                     }
                 },
                 series: props.data ? Object.entries(props.data).map(([name, data]) => ({ name, data: Object.values(data) })) : []

@@ -24,14 +24,14 @@ class LineChart extends React.Component {
 
     static getDerivedStateFromProps(props, state) {
         if (props.data !== state.prevData) {
+            const firstCategoryData = Object.values(props.data)[0] || {};
+            const dates = Object.keys(firstCategoryData);
             return {
                 prevData: props.data,
                 options: {
                     ...state.options,
                     xaxis: {
-                        categories: props.data ? Object.keys(props.data).map(date => {
-                            return moment(date, 'YYYY-MM-DD').format('DD-MM');
-                        }) : []
+                        categories: dates.map(date => date.substring(5, 10))
                     }
                 },
                 series: props.data ? Object.entries(props.data).map(([name, data]) => ({ name, data: Object.values(data) })) : []
@@ -39,6 +39,7 @@ class LineChart extends React.Component {
         }
         return null;
     }
+
 
     render() {
         return (
@@ -182,36 +183,22 @@ export default function MRFDashBoard() {
             <div id="wrapper">
                 <div className="header-nav ">
                     <MRFNavBar showNav={showNav} setShowNav={setShowNav} handleLogout={handleLogout}/>
-
-                    {showNav ?
-                        <div className="nav-links text-light p-5">
-                            <ul className=" bg-dark">
-                                <li className=" bg-dark text-center text-light">
-                                    <span>{`User ID  : ${mrfProfile.userId}`}</span></li>
-                                <li className=" bg-dark text-center text-light">
-                                    <span>{`User Name    : ${mrfProfile.userName}`}</span></li>
-                                <li className=" bg-dark text-center text-light">
-                                    <span>{`First Name   : ${mrfProfile.firstName}`}</span></li>
-                                <li className=" bg-dark text-center text-light">
-                                    <span>{`Last Name    : ${mrfProfile.lastName}`}</span></li>
-                                <li className=" bg-dark text-center text-light">
-                                    <span>{`District : ${mrfProfile.district}`}</span></li>
-                                <li className=" bg-dark text-center text-light">
-                                    <span>{`Local Authority  : ${mrfProfile.localAuthority}`}</span></li>
-                                <li className=" bg-dark text-center text-light">
-                                    <span>{`Id/Passport Number   : ${mrfProfile.idOrPassportNumber}`}</span></li>
-                                <li className=" bg-dark text-center text-light">
-                                    <span>{`Collecting Location Address  : ${mrfProfile.collectingLocationAddress}`}</span>
-                                </li>
-                                <li className=" bg-dark text-center text-light">
-                                    <span>{`Telephone    : ${mrfProfile.telephone}`}</span></li>
-                                <li className=" bg-dark text-center text-light">
-                                    <span>{`GPS Location : ${mrfProfile.gpsLocation}`}</span></li>
+                    {showNav && (
+                        <div className={`bg-dark text-light p-5 position-fixed h-100 sidebar ${showNav ? 'show' : ''}`} style={{width: '300px'}}>
+                            <ul className="list-unstyled">
+                                <li className="text-center">User ID: {mrfProfile.userId}</li>
+                                <li className="text-center">User Name: {mrfProfile.userName}</li>
+                                <li className="text-center">First Name: {mrfProfile.firstName}</li>
+                                <li className="text-center">Last Name: {mrfProfile.lastName}</li>
+                                <li className="text-center">District: {mrfProfile.district}</li>
+                                <li className="text-center">Local Authority: {mrfProfile.localAuthority}</li>
+                                <li className="text-center">Id/Passport Number: {mrfProfile.idOrPassportNumber}</li>
+                                <li className="text-center">Collecting Location Address: {mrfProfile.collectingLocationAddress}</li>
+                                <li className="text-center">Telephone: {mrfProfile.telephone}</li>
+                                <li className="text-center">GPS Location: {mrfProfile.gpsLocation}</li>
                             </ul>
                         </div>
-                        :
-                        null
-                    }
+                    )}
                 </div>
 
                 <div className="mrf-container">

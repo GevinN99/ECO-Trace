@@ -59,3 +59,30 @@ ul li a:active {
 .mrf-container-table {
     text-align: center;
 }
+
+.sidebar {
+    position: fixed;
+    width: 300px;
+    left: -300px;
+    animation-name: slideout;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+.sidebar.show {
+    animation-name: slidein;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes slidein {
+    from { left: -300px; }
+    to { left: 0; }
+}
+
+@keyframes slideout {
+    from { left: 0; }
+    to { left: -300px; }
+}
+
+
