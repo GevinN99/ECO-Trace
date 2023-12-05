@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
-import MRFNavBar from "./MRFNavBar";
+import {useNavigate, useParams} from "react-router-dom";
+import CEANavBar from "./CEANavBar";
+import {IoChevronBackSharp} from "react-icons/io5";
 
-export default function SupplierPage() {
-
-    const userId = localStorage.getItem('userId');
+export default function CEASupplierPage() {
+    const {userId} = useParams();
     const [suppliers, setSuppliers] = useState([]);
     const [showNav, setShowNav] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
+
         const fetchSuppliers = async () => {
             const response = await axios.get(`http://localhost:8070/MRF/getUserSuppliers/${userId}`);
             setSuppliers(response.data.data);
@@ -19,8 +22,24 @@ export default function SupplierPage() {
 
     return (
         <div className="container mt-5 pt-5">
-            <MRFNavBar showNav={showNav} setShowNav={setShowNav} />
-            <h1 className="text-center mb-4 fw-bold">My Suppliers</h1>
+            <CEANavBar showNav={showNav} setShowNav={setShowNav}/>
+
+
+
+            <div className="row">
+                <div className="col-2">
+                    <button className="btn btn-dark mrf-btn" onClick={() => navigate(-1)}>
+                        <IoChevronBackSharp/>
+                    </button>
+                </div>
+                <div className="col-2"></div>
+                <div className="col-4">
+                    <h1 className="text-center mb-4 fw-bold">My Suppliers</h1>
+                </div>
+                <div className="col-4"></div>
+            </div>
+
+
             {suppliers.map(supplier => (
                 <div key={supplier.supplierId} className="card mb-3">
                     <div className="card-body">

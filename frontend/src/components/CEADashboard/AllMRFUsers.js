@@ -24,34 +24,37 @@ export default function AllMRFUsers() {
     }, []);
 
     return (
-        <div className="container pt-5"> {/* Add a top padding here */}
+        <div className="container pt-5">
+            <br/>
             <CEANavBar showNav={showNav} setShowNav={setShowNav}/>
             <br/>
-            <h1>All Material Recycling Facilities</h1>
-            <table className="table table-striped table-hover table-responsive">
-                <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">District</th>
-                    <th scope="col">Local Authority</th>
-                    <th scope="col">Profile</th>
-                </tr>
-                </thead>
-                <tbody>
-                {mrfUsers.map((user, index) => (
-                    <tr key={index}>
-                        <th scope="row">{index + 1}</th>
-                        <td>{user.firstName}</td>
-                        <td>{user.lastName}</td>
-                        <td>{user.district}</td>
-                        <td>{user.localAuthority}</td>
-                        <td><Link to={`/cea-mrf-dashboard/${user.userId}`} className="btn btn-dark">Visit Profile</Link></td>
+            <h1 className="text-center mb-4">All Material Recycling Facilities</h1>
+            <div className="table-responsive">
+                <table className="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">District</th>
+                        <th scope="col">Local Authority</th>
+                        <th scope="col">Profile</th>
                     </tr>
-                ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {mrfUsers.map((user, index) => (
+                        <tr key={index}>
+                            <th scope="row">{index + 1}</th>
+                            <td>{user.firstName}</td>
+                            <td>{user.lastName}</td>
+                            <td>{user.district}</td>
+                            <td>{user.localAuthority}</td>
+                            <td><Link to={`/cea-mrf-dashboard/${user.userId}`} className="btn btn-dark">Visit Profile</Link></td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }

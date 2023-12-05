@@ -18,6 +18,7 @@ import MRFNavBar from "./components/MRFDashboard/MRFNavBar";
 import CEANavBar from "./components/CEADashboard/CEANavBar";
 import AllMRFUsers from "./components/CEADashboard/AllMRFUsers";
 import CEAMRFDashBoard from "./components/CEADashboard/CEA-MRFDashBoard";
+import CEASupplierPage from "./components/CEADashboard/CEA-SupplierPage";
 
 function App() {
     return (
@@ -48,6 +49,7 @@ function App() {
                 <Route path="/AllMRFUsers" element={<AllMRFUsers/>}/>
                 <Route path="/AllMRFUsers" element={<AllMRFUsers/>}/>
                 <Route path="/cea-mrf-dashboard/:userId" element={<CEAMRFDashBoard />} />
+                <Route path="/CEASupplierPage/:userId" element={<CEASupplierPage />} />
 
             </Routes>
         </BrowserRouter>

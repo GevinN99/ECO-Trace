@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { useParams } from 'react-router-dom';
 import axios from "axios";
 import moment from 'moment';
 import Chart from "react-apexcharts";
 import "../MRFDashboard/MRFDashBoard.css";
+import { IoChevronBackSharp } from "react-icons/io5";
+import CEANavBar from "./CEANavBar";
 
 class LineChart extends React.Component {
     constructor(props) {
@@ -56,6 +58,7 @@ class LineChart extends React.Component {
 export default function CEAMRFDashBoard() {
     const { userId } = useParams();
     const navigate = useNavigate();
+    const [showNav, setShowNav] = useState(false);
     axios.defaults.withCredentials = true;
 
 
@@ -128,14 +131,25 @@ export default function CEAMRFDashBoard() {
 
     return (
             <div id="wrapper">
-                <div className="mrf-container">
-
+                <div className="mrf-container pt-5">
+                    <br/>
+                    <CEANavBar showNav={showNav} setShowNav={setShowNav}/>
                     <div className="row">
-                        <div className="col">
-                            <button className="btn btn-dark mrf-btn" onClick={() => navigate("/ViewAllSuppliers")}>
-                                View ALl Suppliers
+                        <div className="col-2">
+                            <button className="btn btn-dark mrf-btn" onClick={() => navigate(-1)}>
+                                <IoChevronBackSharp/>
                             </button>
                         </div>
+                        <div className="col-3"></div>
+                        <div className="col-2">
+                            <div className="row d-flex justify-content-center">
+                                <button className="btn btn-dark mrf-btn">
+                                    <Link to={`/CEASupplierPage/${useParams().userId}`} className="btn btn-dark">View
+                                        All Suppliers</Link>
+                                </button>
+                            </div>
+                        </div>
+                        <div className="col-5"></div>
                     </div>
 
                     <br/>
