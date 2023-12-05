@@ -187,20 +187,20 @@ export default function CEADashBoard() {
                     <CEANavBar showNav={showNav} setShowNav={setShowNav} handleLogout={handleLogout}/>
                     {showNav ?
                         <div className="nav-links text-light">
-                        <ul className="list-group bg-dark">
-                            <li className="list-group-item bg-dark text-center text-light">
+                        <ul className=" bg-dark">
+                            <li className=" bg-dark text-center text-light">
                                 <span>{`User ID  : ${ceaProfile.userId}`}</span></li>
-                            <li className="list-group-item bg-dark text-center text-light">
+                            <li className=" bg-dark text-center text-light">
                                 <span>{`User Name    : ${ceaProfile.userName}`}</span></li>
-                            <li className="list-group-item bg-dark text-center text-light">
+                            <li className=" bg-dark text-center text-light">
                                 <span>{`First Name   : ${ceaProfile.firstName}`}</span></li>
-                            <li className="list-group-item bg-dark text-center text-light">
+                            <li className=" bg-dark text-center text-light">
                                 <span>{`Last Name    : ${ceaProfile.lastName}`}</span></li>
-                            <li className="list-group-item bg-dark text-center text-light">
+                            <li className=" bg-dark text-center text-light">
                                 <span>{`Address : ${ceaProfile.address}`}</span></li>
-                            <li className="list-group-item bg-dark text-center text-light">
+                            <li className=" bg-dark text-center text-light">
                                 <span>{`Employee ID  : ${ceaProfile.employeeId}`}</span></li>
-                            <li className="list-group-item bg-dark text-center text-light">
+                            <li className=" bg-dark text-center text-light">
                                 <span>{`Occupation   : ${ceaProfile.occupation}`}</span></li>
                         </ul>
                     </div>

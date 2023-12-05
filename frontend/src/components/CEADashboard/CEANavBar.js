@@ -20,7 +20,7 @@ export default function CEANavBar({showNav, setShowNav, handleLogout}) {
                 <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <button className="nav-link btn btn-outline-danger" onClick={handleLogout}>Logout</button>
+                            <button className="btn btn-outline-danger" onClick={handleLogout}>Logout</button>
                         </li>
                     </ul>
                 </div>

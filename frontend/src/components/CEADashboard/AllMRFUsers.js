@@ -4,8 +4,10 @@ import {Link} from "react-router-dom";
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CEANavBar from "./CEANavBar";
+import {IoChevronBackSharp} from "react-icons/io5";
 
 export default function AllMRFUsers() {
+    const navigate = useNavigate();
     const [mrfUsers, setMRFUsers] = useState([]);
     const [showNav, setShowNav] = useState(false);
 
@@ -28,7 +30,20 @@ export default function AllMRFUsers() {
             <br/>
             <CEANavBar showNav={showNav} setShowNav={setShowNav}/>
             <br/>
-            <h1 className="text-center mb-4">All Material Recycling Facilities</h1>
+
+            <div className="row">
+                <div className="col-2">
+                    <button className="btn btn-dark mrf-btn" onClick={() => navigate(-1)}>
+                        <IoChevronBackSharp/>
+                    </button>
+                </div>
+                <div className="col-1"></div>
+                <div className="col-6">
+                    <h1 className="text-center mb-4">Material Recycling Facilities</h1>
+                </div>
+                <div className="col"></div>
+            </div>
+
             <div className="table-responsive">
                 <table className="table table-striped table-hover">
                     <thead>

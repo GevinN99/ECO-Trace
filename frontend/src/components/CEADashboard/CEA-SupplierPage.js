@@ -24,8 +24,6 @@ export default function CEASupplierPage() {
         <div className="container mt-5 pt-5">
             <CEANavBar showNav={showNav} setShowNav={setShowNav}/>
 
-
-
             <div className="row">
                 <div className="col-2">
                     <button className="btn btn-dark mrf-btn" onClick={() => navigate(-1)}>
