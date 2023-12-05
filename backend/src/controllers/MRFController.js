@@ -32,7 +32,6 @@ class MRFController {
         }
     }
 
-
     async updateMRFDetails(req, res) {
         try {
             const {userId} = req.params;
@@ -132,24 +131,6 @@ class MRFController {
         }
     }
 
-    //For Admin Page
-    async getAllSuppliers(req, res) {
-        try {
-            const suppliers = await Supplier.find();
-            res.status(200).json({
-                status: 'success',
-                data: suppliers
-            });
-        } catch (err) {
-            console.error(err);
-            res.status(500).json({
-                status: 'error',
-                message: 'An error occurred while fetching the suppliers'
-            });
-        }
-    }
-
-    //For MRF Dashboard
     async getUserSuppliers(req, res) {
         const { userId } = req.params;
 

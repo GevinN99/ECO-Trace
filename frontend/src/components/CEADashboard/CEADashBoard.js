@@ -3,9 +3,8 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import moment from 'moment';
 import Chart from "react-apexcharts";
-import {CgProfile} from "react-icons/cg";
-import {FaHome} from "react-icons/fa";
-import "./CSS/MRFPage.css";
+import "./CEADashBoard.css";
+import CEANavBar from "./CEANavBar";
 
 class LineChart extends React.Component {
     constructor(props) {
@@ -35,7 +34,10 @@ class LineChart extends React.Component {
                         }) : []
                     }
                 },
-                series: props.data ? Object.entries(props.data).map(([name, data]) => ({ name, data: Object.values(data) })) : []
+                series: props.data ? Object.entries(props.data).map(([name, data]) => ({
+                    name,
+                    data: Object.values(data)
+                })) : []
             };
         }
         return null;
@@ -54,9 +56,7 @@ class LineChart extends React.Component {
     }
 }
 
-
-
-export default function MRFDashBoard() {
+export default function CEADashBoard() {
     const [auth, setAuth] = useState(false);
     const [message, setMessage] = useState("");
     const navigate = useNavigate();
@@ -64,9 +64,9 @@ export default function MRFDashBoard() {
     axios.defaults.withCredentials = true;
 
     useEffect(() => {
-        axios.get("http://localhost:8070/MRF/MRFDashBoard").then((response) => {
+        axios.get("http://localhost:8070/CEA/CEADashBoard").then((response) => {
             if (response.data.status === "success") {
-                navigate("/MRFDashboard");
+                navigate("/CEADashboard");
             } else {
                 setAuth(false);
                 setMessage(response.data.message);
@@ -76,12 +76,19 @@ export default function MRFDashBoard() {
         });
     }, []);
 
-    const [dailySums, setDailySums] = useState({ PET: 0, HDPE: 0, LDPE: 0, PP: 0, PS: 0, PVC: 0 });
+    const [dailySums, setDailySums] = useState({
+        PET: 0,
+        HDPE: 0,
+        LDPE: 0,
+        PP: 0,
+        PS: 0,
+        PVC: 0
+    });
 
     useEffect(() => {
         const userId = localStorage.getItem('userId');
         if (userId) {
-            axios.get(`http://localhost:8070/MRF/getSumLastDay/${userId}`)
+            axios.get(`http://localhost:8070/CEA/getSumLastDay/`)
                 .then((response) => {
                     if (response.data.status === 'success') {
                         setDailySums(response.data.data);
@@ -98,31 +105,30 @@ export default function MRFDashBoard() {
     const [sumsLast7Days, setSumsLast7Days] = useState({});
 
     useEffect(() => {
-        const userId = localStorage.getItem('userId');
-        if (userId) {
-            axios.get(`http://localhost:8070/MRF/getSumsLast7Days/${userId}`)
-                .then((response) => {
-                    if (response.data.status === 'success') {
-                        setSumsLast7Days(response.data.data);
-                    } else {
-                        console.error(response.data.message);
-                    }
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }
+        axios.get(`http://localhost:8070/CEA/getSumsLast7Days`)
+            .then((response) => {
+                if (response.data.status === 'success') {
+                    setSumsLast7Days(response.data.data);
+                } else {
+                    console.error(response.data.message);
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }, []);
 
-    const [mrfProfile, setMrfProfile] = useState({});
+
+
+    const [ceaProfile, setCeaProfile] = useState({});
 
     useEffect(() => {
         const userId = localStorage.getItem('userId');
         if (userId) {
-            axios.get(`http://localhost:8070/MRF/viewMRFProfile/${userId}`)
+            axios.get(`http://localhost:8070/CEA/viewCEAProfile/${userId}`)
                 .then((response) => {
                     if (response.data.status === 'success') {
-                        setMrfProfile(response.data.data);
+                        setCeaProfile(response.data.data);
                     } else {
                         console.error(response.data.message);
                     }
@@ -132,6 +138,7 @@ export default function MRFDashBoard() {
                 });
         }
     }, []);
+
 
     // Transform the data
     const transformedData = Object.entries(sumsLast7Days).reduce((acc, [date, categories]) => {
@@ -160,89 +167,57 @@ export default function MRFDashBoard() {
     const [sumsEachDayLastMonth, setSumsEachDayLastMonth] = useState({});
 
     useEffect(() => {
-        const userId = localStorage.getItem('userId');
-        if (userId) {
-            axios.get(`http://localhost:8070/MRF/getSumsEachDayLastMonth/${userId}`)
-                .then((response) => {
-                    if (response.data.status === 'success') {
-                        setSumsEachDayLastMonth(response.data.data);
-                    } else {
-                        console.error(response.data.message);
-                    }
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }
+        axios.get(`http://localhost:8070/CEA/getSumsEachDayLastMonth`)
+            .then((response) => {
+                if (response.data.status === 'success') {
+                    setSumsEachDayLastMonth(response.data.data);
+                } else {
+                    console.error(response.data.message);
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }, []);
 
-
-
     return (
-        <div className={`MRFDashBoard ${auth ? "menuDisplayed" : ""}`}>
+        <div className={`CEADashBoard ${auth ? "menuDisplayed" : ""}`}>
             <div id="wrapper">
                 <div className="header-nav ">
-                    <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-                        <div className="container-fluid">
-                            <div className="navbar-brand">
-                                <CgProfile onClick={() => setShowNav(!showNav)} className="mrf-nav-logo"/>
-                            </div>
-                            <div className="navbar-brand" onClick={() => navigate("/MRFDashBoard")}>
-                                <FaHome className="mrf-nav-logo"/>
-                            </div>
-                            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                                <span className="navbar-toggler-icon"></span>
-                            </button>
-                            <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
-                                <ul className="navbar-nav">
-                                    <li className="nav-item me-2">
-                                        <button className="nav-link btn btn-outline-light" onClick={() => navigate("/SupplierCollection")}>Collected</button>
-                                    </li>
-                                    <li className="nav-item me-2">
-                                        <button className="nav-link btn btn-outline-light" onClick={() => navigate("/AddCategorizedData")}>Recycle</button>
-                                    </li>
-                                    <li className="nav-item">
-                                        <button className="nav-link btn btn-outline-danger" onClick={handleLogout}>Logout</button>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </nav>
-
+                    <CEANavBar showNav={showNav} setShowNav={setShowNav} handleLogout={handleLogout}/>
                     {showNav ?
                         <div className="nav-links text-light">
-                            <ul className="list-unstyled">
-                                <li className="text-center"><span>{`User ID: ${mrfProfile.userId}`}</span></li>
-                                <li className="text-center"><span>{`User Name: ${mrfProfile.userName}`}</span></li>
-                                <li className="text-center"><span>{`First Name: ${mrfProfile.firstName}`}</span></li>
-                                <li className="text-center"><span>{`Last Name: ${mrfProfile.lastName}`}</span></li>
-                                <li className="text-center"><span>{`District: ${mrfProfile.district}`}</span></li>
-                                <li className="text-center"><span>{`Local Authority: ${mrfProfile.localAuthority}`}</span></li>
-                                <li className="text-center"><span>{`Id/Passport Number: ${mrfProfile.idOrPassportNumber}`}</span></li>
-                                <li className="text-center"><span>{`Collecting Location Address: ${mrfProfile.collectingLocationAddress}`}</span></li>
-                                <li className="text-center"><span>{`Telephone: ${mrfProfile.telephone}`}</span></li>
-                                <li className="text-center"><span>{`GPS Location: ${mrfProfile.gpsLocation}`}</span></li>
-                            </ul>
-                        </div>
-                        :
-                        null
-                    }
+                        <ul className="list-group bg-dark">
+                            <li className="list-group-item bg-dark text-center text-light">
+                                <span>{`User ID  : ${ceaProfile.userId}`}</span></li>
+                            <li className="list-group-item bg-dark text-center text-light">
+                                <span>{`User Name    : ${ceaProfile.userName}`}</span></li>
+                            <li className="list-group-item bg-dark text-center text-light">
+                                <span>{`First Name   : ${ceaProfile.firstName}`}</span></li>
+                            <li className="list-group-item bg-dark text-center text-light">
+                                <span>{`Last Name    : ${ceaProfile.lastName}`}</span></li>
+                            <li className="list-group-item bg-dark text-center text-light">
+                                <span>{`Address : ${ceaProfile.address}`}</span></li>
+                            <li className="list-group-item bg-dark text-center text-light">
+                                <span>{`Employee ID  : ${ceaProfile.employeeId}`}</span></li>
+                            <li className="list-group-item bg-dark text-center text-light">
+                                <span>{`Occupation   : ${ceaProfile.occupation}`}</span></li>
+                        </ul>
+                    </div>
+                        : null }
                 </div>
-
-                <div className="mrf-container">
-
-
+                <div className="cea-container">
                     <div className="row">
                         <div className="col-3"></div>
                         <div className="col-2">
-                            <button className="btn btn-dark mrf-btn" onClick={() => navigate("/CreateSupplier")}>
-                                Add New Supplier
+                            <button className="btn btn-dark mrf-btn" onClick={() => navigate("/AllMRFUsers")}>
+                                MRF Users
                             </button>
                         </div>
                         <div className="col-2"></div>
                         <div className="col-2">
-                            <button className="btn btn-dark mrf-btn" onClick={() => navigate("/ViewAllSuppliers")}>
-                                View ALl Suppliers
+                            <button className="btn btn-dark mrf-btn" onClick={() => navigate("/CEADashboard")}>
+                                Generate Report
                             </button>
                         </div>
                         <div className="col-3"></div>
@@ -254,7 +229,7 @@ export default function MRFDashBoard() {
                     <div className="row">
                         <div className="col">
                             <table className="table caption-top table-hover">
-                                <caption className="mrf-container-table"> - Amounts Collected In a Day -</caption>
+                                <caption className="cea-container-table"> - Amounts Collected In a Day -</caption>
                                 <thead>
                                 <tr>
                                     <th scope="col"></th>
@@ -296,28 +271,22 @@ export default function MRFDashBoard() {
                                 </tbody>
                             </table>
                         </div>
-
                         {/*Line Graph*/}
                         <div className="col">
-                            <div className="mrf-graph-container d-flex justify-content-center align-items-center">-
-                                Amounts Collected In a Month -
-                            </div>
-                            <div className="mrf-graph-container d-flex justify-content-center align-items-center">
-                                <div className="mrf-graph">
+                            <div className="cea-graph-container d-flex justify-content-center align-items-center">- Amounts Collected In a Month -</div>
+                            <div className="cea-graph-container d-flex justify-content-center align-items-center">
+                                <div className="cea-graph">
                                     <LineChart data={transformedData} />
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
                     <br/>
                     <br/>
-
                     <div className="row">
                         <div className="col">
                             <div className="col-md-12">
-                                <div className="mrf-container-table">- Amounts Collected In a Month -</div>
+                                <div className="cea-container-table">- Amounts Collected In a Month -</div>
                             </div>
                             <br/>
                             <table className="table table-striped table-hover">

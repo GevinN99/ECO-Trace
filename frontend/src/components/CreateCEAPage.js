@@ -48,6 +48,9 @@ export default function CreateNewCEAPage() {
                 <h1 className="cea-form-title justify-content-center">Register CEA</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="form-outline col-md-8 offset-md-2">
+                        <label className="form-label" htmlFor="form2Example1">
+                            First Name
+                        </label>
                         <input
                             type="text"
                             placeholder="Enter First Name"
@@ -57,11 +60,11 @@ export default function CreateNewCEAPage() {
                             className="form-control"
                             required
                         />
-                        <label className="form-label" htmlFor="form2Example1">
-                            First Name
-                        </label>
                     </div>
                     <div className="form-outline col-md-8 offset-md-2">
+                        <label className="form-label" htmlFor="form2Example1">
+                            Last Name
+                        </label>
                         <input
                             type="text"
                             placeholder="Enter Last Name"
@@ -71,11 +74,11 @@ export default function CreateNewCEAPage() {
                             className="form-control"
                             required
                         />
-                        <label className="form-label" htmlFor="form2Example1">
-                            Last Name
-                        </label>
                     </div>
                     <div className="form-outline col-md-8 offset-md-2">
+                        <label className="form-label" htmlFor="form2Example1">
+                            Address
+                        </label>
                         <input
                             type="text"
                             placeholder="Enter Address"
@@ -85,11 +88,11 @@ export default function CreateNewCEAPage() {
                             className="form-control"
                             required
                         />
-                        <label className="form-label" htmlFor="form2Example1">
-                            Address
-                        </label>
                     </div>
                     <div className="form-outline col-md-8 offset-md-2">
+                        <label className="form-label" htmlFor="form2Example1">
+                            Employee ID
+                        </label>
                         <input
                             type="text"
                             placeholder="Enter Employee ID"
@@ -99,11 +102,11 @@ export default function CreateNewCEAPage() {
                             className="form-control"
                             required
                         />
-                        <label className="form-label" htmlFor="form2Example1">
-                            Employee ID
-                        </label>
                     </div>
                     <div className="form-outline col-md-8 offset-md-2">
+                        <label className="form-label" htmlFor="form2Example1">
+                            Occupation
+                        </label>
                         <input
                             type="text"
                             placeholder="Enter Occupation"
@@ -113,11 +116,11 @@ export default function CreateNewCEAPage() {
                             className="form-control"
                             required
                         />
-                        <label className="form-label" htmlFor="form2Example1">
-                            Occupation
-                        </label>
                     </div>
                     <div className="form-outline col-md-8 offset-md-2">
+                        <label className="form-label" htmlFor="form2Example1">
+                            Username
+                        </label>
                         <input
                             type="text"
                             placeholder="Enter Username"
@@ -127,11 +130,11 @@ export default function CreateNewCEAPage() {
                             className="form-control"
                             required
                         />
-                        <label className="form-label" htmlFor="form2Example1">
-                            Username
-                        </label>
                     </div>
                     <div className="form-outline col-md-8 offset-md-2">
+                        <label className="form-label" htmlFor="form2Example1">
+                            Password
+                        </label>
                         <input
                             type="password"
                             placeholder="Enter Password"
@@ -140,9 +143,6 @@ export default function CreateNewCEAPage() {
                             onChange={(e) => setValues({ ...values, password: e.target.value })}
                             className="form-control"
                         />
-                        <label className="form-label" htmlFor="form2Example1">
-                            Password
-                        </label>
                     </div>
 
                     <div className="form-outline col-md-4 offset-md-4 justify-content-center">
@@ -155,5 +155,4 @@ export default function CreateNewCEAPage() {
             </div>
         </div>
     );
-
 }

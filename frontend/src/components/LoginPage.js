@@ -38,10 +38,9 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="LoginPage">
-            <div className="form-box">
-                <h1 className="text-center ">Sign In</h1>
-                <br/>
+        <div className="LoginPage d-flex align-items-center justify-content-center">
+            <div className="form-box p-5">
+                <h1 className="text-center mb-4">Sign In</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="form-outline mb-4">
                         <input type="text" name="userName" placeholder='Enter User-Name' value={values.userName} onChange={handleInputChange} className="form-control" />
@@ -49,7 +48,9 @@ export default function LoginPage() {
                     <div className="form-outline mb-4">
                         <input type="password" placeholder='Enter Password' name="password" value={values.password} onChange={handleInputChange} className="form-control" />
                     </div>
-                    <button type='submit' className="btn custom-btn">Sign in</button>
+                    <div className="form-outline mb-4 justify-content-center align-content-center">
+                        <button type='submit' className="btn btn-dark w-100">Sign in</button>
+                    </div>
                 </form>
             </div>
         </div>

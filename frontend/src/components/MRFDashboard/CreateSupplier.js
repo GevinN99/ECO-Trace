@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import MRFNavBar from "./MRFNavBar";
 
 export default function CreateSupplier() {
 
@@ -16,6 +17,7 @@ export default function CreateSupplier() {
 
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+    const [showNav, setShowNav] = useState(false);
 
     useEffect(() => {
         const fetchSupplierId = async () => {
@@ -52,10 +54,13 @@ export default function CreateSupplier() {
     };
 
     return (
-        <div className="container d-flex justify-content-center">
-            <div className="row form-box">
-                <div className="col-12 form-image"></div>
-                <form onSubmit={handleSubmit} className="col-12">
+        <div className="container d-flex justify-content-center" style={{height: "100%"}}>
+            <MRFNavBar showNav={showNav} setShowNav={setShowNav} />
+            <div className="form-box col-md-8">
+                <br/>
+                <h1 className="text-center fw-bold">Add Collection</h1>
+                <br/>
+                <form onSubmit={handleSubmit}>
                     {error && <div className="alert alert-danger">{error}</div>}
                     {success && <div className="alert alert-success">{success}</div>}
                     <div className="form-outline mb-4">

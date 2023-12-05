@@ -1,18 +1,18 @@
 import React, {useState} from "react";
 import axios from "axios";
+import MRFNavBar from "./MRFNavBar";
 
 export default function SupplierCollection() {
     const userId = localStorage.getItem('userId');
-
     const [values, setValues] = useState({
         supplierType: "",
         supplierId: "",
         quantity: "",
         amountPaid: ""
     });
-
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+    const [showNav, setShowNav] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -41,8 +41,9 @@ export default function SupplierCollection() {
 
     return (
         <div className="d-flex justify-content-center align-items-center" style={{height: "100%"}}>
+            <MRFNavBar showNav={showNav} setShowNav={setShowNav}/>
             <div className="form-box">
-                <h1 className="text-center">Add Collection</h1>
+                <h1 className="text-center fw-bold">Add Collection</h1>
                 <br/>
                 <form onSubmit={handleSubmit}>
                     {error && <div className="error-message">{error}</div>}

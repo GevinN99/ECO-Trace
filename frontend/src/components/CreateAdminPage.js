@@ -40,10 +40,16 @@ export default function CreateAdminPage() {
 
     return (
         <div className="SignupPage">
-            <div className="form-box">
-                <div className="form-image"></div>
+        <div className="d-flex justify-content-center">
                 <form onSubmit={handleSubmit}>
+                    <br/>
+                    <br/>
+                    <h1 className="text-center">Create Admin Account</h1>
+                    <br/>
                     <div className="form-outline mb-4">
+                        <label className="form-label" htmlFor="form2Example1">
+                            First Name
+                        </label>
                         <input
                             type="text"
                             placeholder="Enter First Name"
@@ -51,12 +57,12 @@ export default function CreateAdminPage() {
                             onChange={handleFirstNameChange}
                             className="form-control"
                         />
-                        <label className="form-label" htmlFor="form2Example1">
-                            First Name
-                        </label>
                     </div>
 
                     <div className="form-outline mb-4">
+                        <label className="form-label" htmlFor="form2Example1">
+                            Last Name
+                        </label>
                         <input
                             type="text"
                             placeholder="Enter Last Name"
@@ -64,12 +70,12 @@ export default function CreateAdminPage() {
                             onChange={handleLastNameChange}
                             className="form-control"
                         />
-                        <label className="form-label" htmlFor="form2Example1">
-                            Last Name
-                        </label>
                     </div>
 
                     <div className="form-outline mb-4">
+                        <label className="form-label" htmlFor="form2Example1">
+                            Select Your Account Type
+                        </label>
                         <select
                             value={values.type}
                             onChange={(e) => setValues({ ...values, type: e.target.value })}
@@ -83,18 +89,18 @@ export default function CreateAdminPage() {
                             <option value="CEA">CEA</option>
                             <option value="MRF">MRF</option>
                         </select>
-                        <label className="form-label" htmlFor="form2Example1">
-                            Select Your Account Type
-                        </label>
                     </div>
 
                     <div className="form-outline mb-4">
+                        <label className="form-label" htmlFor="form2Example1"> User Name </label>
                         <input type="text" placeholder="Auto-generated User Name" value={values.userName} disabled
                                className="form-control"/>
-                        <label className="form-label" htmlFor="form2Example1"> User Name </label>
                     </div>
 
                     <div className="form-outline mb-4">
+                        <label className="form-label" htmlFor="form2Example2">
+                            Password
+                        </label>
                         <input
                             type="password"
                             placeholder="Enter Password"
@@ -102,9 +108,6 @@ export default function CreateAdminPage() {
                             onChange={(e) => setValues({ ...values, password: e.target.value })}
                             className="form-control"
                         />
-                        <label className="form-label" htmlFor="form2Example2">
-                            Password
-                        </label>
                     </div>
 
                     <button type="submit" className="btn custom-btn">

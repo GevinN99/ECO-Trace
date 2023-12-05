@@ -8,7 +8,6 @@ router.put('/updateMRFDetails/:userId', MRFController.updateMRFDetails);
 router.post('/createCollection', MRFController.createCollection);
 router.post('/createSupplier', MRFController.createSupplier);
 router.get('/generateSupplierId', MRFController.generateSupplierId);
-router.get('/getAllSuppliers', MRFController.getAllSuppliers);
 router.get('/getUserSuppliers/:userId', MRFController.getUserSuppliers);
 router.post('/createCategory', MRFController.createCategory);
 router.get('/getSumsEachDayLastMonth/:userId', MRFController.getSumsEachDayLastMonth);

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import MRFNavBar from "./MRFNavBar";
 
 export default function SupplierPage() {
 
     const userId = localStorage.getItem('userId');
-
     const [suppliers, setSuppliers] = useState([]);
+    const [showNav, setShowNav] = useState(false);
 
     useEffect(() => {
         const fetchSuppliers = async () => {
@@ -17,8 +18,9 @@ export default function SupplierPage() {
     }, [userId]);
 
     return (
-        <div className="container mt-5">
-            <h1 className="text-center mb-4">My Suppliers</h1>
+        <div className="container mt-5 pt-5">
+            <MRFNavBar showNav={showNav} setShowNav={setShowNav} />
+            <h1 className="text-center mb-4 fw-bold">My Suppliers</h1>
             {suppliers.map(supplier => (
                 <div key={supplier.supplierId} className="card mb-3">
                     <div className="card-body">
@@ -32,7 +34,6 @@ export default function SupplierPage() {
                 </div>
             ))}
         </div>
-
     );
 }
 

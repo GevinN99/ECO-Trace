@@ -1,35 +1,24 @@
 .LoginPage {
-    height: 80vh;
+    height: 100vh;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
+    background: #f8f9fa;
 }
 
 .form-box {
-    position: relative;
-    width: 50%; /* Adjusted to be similar to Bootstrap's col-6 */
-    max-width: 400px; /* To prevent the form from becoming too wide on large screens */
+    width: 100%;
+    max-width: 400px;
     border: none;
     border-radius: 30px;
-    padding: 2%;
-    margin-top: 5%;
-    box-shadow: #fff 5px 5px 20px;
     background-color: #fff;
-    color: #000;
+    box-shadow: 0 2px 12px 5px rgba(113, 113, 113, 0.3);
 }
 
 .custom-btn {
     background-color: #000;
     border-color: #fff;
-    box-shadow: 0 2px 12px 5px rgba(113, 113, 113, 0.3);
-    width: 100%;
     color: #fff;
 }
 
 .custom-btn:hover {
-    width: 100%;
     color: #fff;
 }
-

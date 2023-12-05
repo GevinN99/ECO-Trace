@@ -1,12 +1,9 @@
 .cea-form-box {
     width: 80%;
-    margin: 5% auto;
+    margin: 2% auto;
     padding: 2%;
-    box-shadow: 5px 5px 20px #8bff8e;
     flex-direction: column;
     align-items: center;
-    border: none;
-    border-radius: 30px;
 }
 
 .SignUpPage {
@@ -23,6 +20,5 @@
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 2%;
-    color: #038903;
-    text-shadow: 5px 5px 20px #8bff8e;
+    color: #000000;
 }

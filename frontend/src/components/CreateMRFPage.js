@@ -51,6 +51,9 @@ export default function CreateNewMRFPage() {
                 <h1 className="mrf-form-title justify-content-center">Register MRF</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="form-outline col-md-8 offset-md-2">
+                        <label className="form-label" htmlFor="form2Example1">
+                            First Name
+                        </label>
                         <input
                             type="text"
                             placeholder="Enter First Name"
@@ -59,12 +62,12 @@ export default function CreateNewMRFPage() {
                             onChange={handleFirstNameChange}
                             className="form-control"
                         />
-                        <label className="form-label" htmlFor="form2Example1">
-                            First Name
-                        </label>
                     </div>
-
+                    <br/>
                     <div className="form-outline col-md-8 offset-md-2">
+                        <label className="form-label" htmlFor="form2Example1">
+                            Last Name
+                        </label>
                         <input
                             type="text"
                             placeholder="Enter Last Name"
@@ -73,12 +76,12 @@ export default function CreateNewMRFPage() {
                             onChange={handleLastNameChange}
                             className="form-control"
                         />
-                        <label className="form-label" htmlFor="form2Example1">
-                            Last Name
-                        </label>
                     </div>
-
+                    <br/>
                     <div className="form-outline col-md-8 offset-md-2">
+                        <label className="form-label" htmlFor="form2Example1">
+                            District
+                        </label>
                         <input
                             type="text"
                             placeholder="Enter District"
@@ -87,12 +90,12 @@ export default function CreateNewMRFPage() {
                             onChange={(e) => setValues({ ...values, district: e.target.value })}
                             className="form-control"
                         />
-                        <label className="form-label" htmlFor="form2Example1">
-                            District
-                        </label>
                     </div>
-
+                    <br/>
                     <div className="form-outline col-md-8 offset-md-2">
+                        <label className="form-label" htmlFor="form2Example1">
+                            Local Authority
+                        </label>
                         <input
                             type="text"
                             placeholder="Enter Local Authority"
@@ -101,12 +104,12 @@ export default function CreateNewMRFPage() {
                             onChange={(e) => setValues({ ...values, localAuthority: e.target.value })}
                             className="form-control"
                         />
-                        <label className="form-label" htmlFor="form2Example1">
-                            Local Authority
-                        </label>
                     </div>
-
+                    <br/>
                     <div className="form-outline col-md-8 offset-md-2">
+                        <label className="form-label" htmlFor="form2Example1">
+                            ID/Passport Number
+                        </label>
                         <input
                             type="text"
                             placeholder="Enter ID/Passport Number"
@@ -115,12 +118,12 @@ export default function CreateNewMRFPage() {
                             onChange={(e) => setValues({ ...values, idOrPassportNumber: e.target.value })}
                             className="form-control"
                         />
-                        <label className="form-label" htmlFor="form2Example1">
-                            ID/Passport Number
-                        </label>
                     </div>
-
+                    <br/>
                     <div className="form-outline col-md-8 offset-md-2">
+                        <label className="form-label" htmlFor="form2Example1">
+                            Collecting Location Address
+                        </label>
                         <input
                             type="text"
                             placeholder="Enter Collecting Location Address"
@@ -129,12 +132,12 @@ export default function CreateNewMRFPage() {
                             onChange={(e) => setValues({ ...values, collectingLocationAddress: e.target.value })}
                             className="form-control"
                         />
-                        <label className="form-label" htmlFor="form2Example1">
-                            Collecting Location Address
-                        </label>
                     </div>
-
+                    <br/>
                     <div className="form-outline col-md-8 offset-md-2">
+                        <label className="form-label" htmlFor="form2Example1">
+                            Telephone
+                        </label>
                         <input
                             type="text"
                             placeholder="Enter Telephone"
@@ -143,12 +146,12 @@ export default function CreateNewMRFPage() {
                             onChange={(e) => setValues({ ...values, telephone: e.target.value })}
                             className="form-control"
                         />
-                        <label className="form-label" htmlFor="form2Example1">
-                            Telephone
-                        </label>
                     </div>
-
+                    <br/>
                     <div className="form-outline col-md-8 offset-md-2">
+                        <label className="form-label" htmlFor="form2Example1">
+                            GPS Location
+                        </label>
                         <input
                             type="text"
                             placeholder="Enter GPS Location"
@@ -157,12 +160,12 @@ export default function CreateNewMRFPage() {
                             onChange={(e) => setValues({ ...values, gpsLocation: e.target.value })}
                             className="form-control"
                         />
-                        <label className="form-label" htmlFor="form2Example1">
-                            GPS Location
-                        </label>
                     </div>
-
+                    <br/>
                     <div className="form-outline col-md-8 offset-md-2">
+                        <label className="form-label" htmlFor="form2Example1">
+                            User Name
+                        </label>
                         <input
                             type="text"
                             placeholder="Auto-generated User Name"
@@ -170,12 +173,12 @@ export default function CreateNewMRFPage() {
                             className="form-control"
                             onChange={(e) => setValues({ ...values, userName: e.target.value })}
                         />
-                        <label className="form-label" htmlFor="form2Example1">
-                            User Name
-                        </label>
                     </div>
-
+                    <br/>
                     <div className="form-outline col-md-8 offset-md-2">
+                        <label className="form-label" htmlFor="form2Example1">
+                            Password
+                        </label>
                         <input
                             type="password"
                             placeholder="Enter Password"
@@ -184,11 +187,8 @@ export default function CreateNewMRFPage() {
                             onChange={(e) => setValues({ ...values, password: e.target.value })}
                             className="form-control"
                         />
-                        <label className="form-label" htmlFor="form2Example1">
-                            Password
-                        </label>
                     </div>
-
+                    <br/>
                     <div className="form-outline col-md-4 offset-md-4 justify-content-center">
                     <button type="submit" className="btn custom-btn">
                         Register
