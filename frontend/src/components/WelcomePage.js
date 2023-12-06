@@ -7,7 +7,7 @@ import mountain3 from '../assets/images/B-lg.png?lqip';
 import sky from '../assets/images/bg-img.png?lqip';
 import image from '../assets/images/Recycle-bg.jpg?lqip';
 import logo from '../assets/images/logo.png?lqip';
-import './CSS/WelcomePage.css';
+import './WelcomePage.css';
 
 const WelcomePage = () => {
     useEffect(() => {
@@ -59,7 +59,7 @@ const WelcomePage = () => {
                         </div>
                         <div className="sub-container">
                             <Link to="/login">
-                                <button type="button" className="btn btn-success btn-rounded">Login</button>
+                                <button type="button" className="btn btn-dark btn-rounded">Login</button>
                             </Link>
                         </div>
                     </div>

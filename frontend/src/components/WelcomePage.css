@@ -196,7 +196,7 @@ section .container > *{
     margin-inside: 10%;
     box-shadow: #8bff8e 5px 5px 20px;
     margin-bottom: 50px;
-    background-image: url('../../assets/images/Recycle-bg.jpg');
+    background-image: url('../assets/images/Recycle-bg.jpg');
     background-size: cover;
 }
 

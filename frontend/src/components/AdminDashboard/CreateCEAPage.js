@@ -1,17 +1,17 @@
 import React, {useState} from "react";
 import axios from "axios";
-import "./CSS/CraeteMRFPage.css";
+import "./CreateCEAPage.css";
+import AdminNavBar from "./AdminNavBar";
+import {useNavigate} from "react-router-dom";
 
-export default function CreateNewMRFPage() {
+export default function CreateNewCEAPage() {
+    const navigate = useNavigate();
     const [values, setValues] = useState({
         firstName: "",
         lastName: "",
-        district: "",
-        localAuthority: "",
-        idOrPassportNumber: "",
-        collectingLocationAddress: "",
-        telephone: "",
-        gpsLocation: "",
+        address: "",
+        employeeId: "",
+        occupation: "",
         userName: "",
         password: "",
     });
@@ -19,7 +19,7 @@ export default function CreateNewMRFPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:8070/auth/mrfRegister", values);
+            const response = await axios.post("http://localhost:8070/auth/ceaRegister", values);
             console.log(response);
             alert(response.data.message);
         } catch (error) {
@@ -46,9 +46,10 @@ export default function CreateNewMRFPage() {
 
     return (
         <div className="SignupPage">
-            <div className="mrf-form-box">
-                <div className="mrf-form-image"></div>
-                <h1 className="mrf-form-title justify-content-center">Register MRF</h1>
+            <AdminNavBar/>
+            <div className="cea-form-box p-5">
+                <div className="cea-form-image"></div>
+                <h1 className="cea-form-title justify-content-center">Register CEA</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="form-outline col-md-8 offset-md-2">
                         <label className="form-label" htmlFor="form2Example1">
@@ -61,9 +62,9 @@ export default function CreateNewMRFPage() {
                             value={values.firstName}
                             onChange={handleFirstNameChange}
                             className="form-control"
+                            required
                         />
                     </div>
-                    <br/>
                     <div className="form-outline col-md-8 offset-md-2">
                         <label className="form-label" htmlFor="form2Example1">
                             Last Name
@@ -75,106 +76,65 @@ export default function CreateNewMRFPage() {
                             value={values.lastName}
                             onChange={handleLastNameChange}
                             className="form-control"
+                            required
                         />
                     </div>
-                    <br/>
                     <div className="form-outline col-md-8 offset-md-2">
                         <label className="form-label" htmlFor="form2Example1">
-                            District
+                            Address
                         </label>
                         <input
                             type="text"
-                            placeholder="Enter District"
-                            name="district"
-                            value={values.district}
-                            onChange={(e) => setValues({ ...values, district: e.target.value })}
+                            placeholder="Enter Address"
+                            name="address"
+                            value={values.address}
+                            onChange={(e) => setValues({...values, address: e.target.value})}
                             className="form-control"
+                            required
                         />
                     </div>
-                    <br/>
                     <div className="form-outline col-md-8 offset-md-2">
                         <label className="form-label" htmlFor="form2Example1">
-                            Local Authority
+                            Employee ID
                         </label>
                         <input
                             type="text"
-                            placeholder="Enter Local Authority"
-                            name="localAuthority"
-                            value={values.localAuthority}
-                            onChange={(e) => setValues({ ...values, localAuthority: e.target.value })}
+                            placeholder="Enter Employee ID"
+                            name="employeeId"
+                            value={values.employeeId}
+                            onChange={(e) => setValues({...values, employeeId: e.target.value})}
                             className="form-control"
+                            required
                         />
                     </div>
-                    <br/>
                     <div className="form-outline col-md-8 offset-md-2">
                         <label className="form-label" htmlFor="form2Example1">
-                            ID/Passport Number
+                            Occupation
                         </label>
                         <input
                             type="text"
-                            placeholder="Enter ID/Passport Number"
-                            name="idOrPassportNumber"
-                            value={values.idOrPassportNumber}
-                            onChange={(e) => setValues({ ...values, idOrPassportNumber: e.target.value })}
+                            placeholder="Enter Occupation"
+                            name="occupation"
+                            value={values.occupation}
+                            onChange={(e) => setValues({...values, occupation: e.target.value})}
                             className="form-control"
+                            required
                         />
                     </div>
-                    <br/>
                     <div className="form-outline col-md-8 offset-md-2">
                         <label className="form-label" htmlFor="form2Example1">
-                            Collecting Location Address
+                            Username
                         </label>
                         <input
                             type="text"
-                            placeholder="Enter Collecting Location Address"
-                            name="collectingLocationAddress"
-                            value={values.collectingLocationAddress}
-                            onChange={(e) => setValues({ ...values, collectingLocationAddress: e.target.value })}
-                            className="form-control"
-                        />
-                    </div>
-                    <br/>
-                    <div className="form-outline col-md-8 offset-md-2">
-                        <label className="form-label" htmlFor="form2Example1">
-                            Telephone
-                        </label>
-                        <input
-                            type="text"
-                            placeholder="Enter Telephone"
-                            name="telephone"
-                            value={values.telephone}
-                            onChange={(e) => setValues({ ...values, telephone: e.target.value })}
-                            className="form-control"
-                        />
-                    </div>
-                    <br/>
-                    <div className="form-outline col-md-8 offset-md-2">
-                        <label className="form-label" htmlFor="form2Example1">
-                            GPS Location
-                        </label>
-                        <input
-                            type="text"
-                            placeholder="Enter GPS Location"
-                            name="gpsLocation"
-                            value={values.gpsLocation}
-                            onChange={(e) => setValues({ ...values, gpsLocation: e.target.value })}
-                            className="form-control"
-                        />
-                    </div>
-                    <br/>
-                    <div className="form-outline col-md-8 offset-md-2">
-                        <label className="form-label" htmlFor="form2Example1">
-                            User Name
-                        </label>
-                        <input
-                            type="text"
-                            placeholder="Auto-generated User Name"
+                            placeholder="Enter Username"
+                            name="userName"
                             value={values.userName}
+                            onChange={(e) => setValues({...values, userName: e.target.value})}
                             className="form-control"
-                            onChange={(e) => setValues({ ...values, userName: e.target.value })}
+                            required
                         />
                     </div>
-                    <br/>
                     <div className="form-outline col-md-8 offset-md-2">
                         <label className="form-label" htmlFor="form2Example1">
                             Password
@@ -188,13 +148,14 @@ export default function CreateNewMRFPage() {
                             className="form-control"
                         />
                     </div>
-                    <br/>
-                    <div className="form-outline col-md-4 offset-md-4 justify-content-center">
-                    <button type="submit" className="btn custom-btn">
-                        Register
-                    </button>
+                    <div className="d-flex justify-content-center p-2">
+                        <div className="form-check mb-4">
+                            <button type="submit" className="btn btn-dark">Register</button>
+                        </div>
+                        <div className="form-check mb-4">
+                            <button className="btn btn-dark" onClick={() => navigate(-1)}>Cancel</button>
+                        </div>
                     </div>
-
                 </form>
             </div>
         </div>

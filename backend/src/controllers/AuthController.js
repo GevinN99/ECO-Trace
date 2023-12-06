@@ -14,7 +14,6 @@ class AuthController {
         try {
             const {firstName, lastName, userName, password} = req.body;
             const hashedPassword = await bcrypt.hash(password, saltRounds);
-
             let idPrefix = 'AD';
             let tempUserName = userName;
             let count = 1;
@@ -27,10 +26,13 @@ class AuthController {
                     return res.status(400).json({status: 'error', message: 'Cannot generate a unique username'});
                 }
             }
-
-            const paddedCount = (count + 1).toString().padStart(4, '0');
-            const userId = idPrefix + paddedCount;
-
+            let userId;
+            let existingUser;
+            do {
+                const paddedCount = (count++).toString().padStart(4, '0');
+                userId = idPrefix + paddedCount;
+                existingUser = await Admin.findOne({userId});
+            } while (existingUser);
             const values = {
                 firstName,
                 lastName,
@@ -38,17 +40,27 @@ class AuthController {
                 password: hashedPassword,
                 userId
             };
-
-            const existingUser = await Admin.findOne({userId});
-            if (existingUser) {
-                return res.status(400).json({status: 'error', message: 'User ID already exists'});
-            }
-
             await Admin.create(values);
             res.status(200).json({status: 'success', message: 'Admin Added.'});
         } catch (err) {
             console.error(err);
             res.status(500).json({status: 'error', message: 'Error with Adding Admin.'});
+        }
+    }
+
+    async updateAdmin(req, res) {
+        try {
+            const {userId} = req.params;
+            const {firstName, lastName, userName, password} = req.body;
+            const hashedPassword = await bcrypt.hash(password, saltRounds);
+            const updatedAdmin = await Admin.findOneAndUpdate({userId}, {firstName, lastName, userName, password: hashedPassword}, {new: true});
+            if (!updatedAdmin) {
+                return res.status(404).json({status: 'error', message: 'Admin not found'});
+            }
+            res.status(200).json({status: 'success', data: updatedAdmin});
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({status: 'error', message: 'Internal Server Error'});
         }
     }
 
@@ -103,6 +115,22 @@ class AuthController {
         } catch (err) {
             console.error(err);
             res.status(500).json({status: 'error', message: 'Error with Adding CEA.'});
+        }
+    }
+
+    async updateCEA(req, res) {
+        try {
+            const {userId} = req.params;
+            const {firstName, lastName, userName, password, address, employeeId, occupation} = req.body;
+            const hashedPassword = await bcrypt.hash(password, saltRounds);
+            const updatedCEA = await CEA.findOneAndUpdate({userId}, {firstName, lastName, userName, password: hashedPassword, address, employeeId, occupation}, {new: true});
+            if (!updatedCEA) {
+                return res.status(404).json({status: 'error', message: 'CEA not found'});
+            }
+            res.status(200).json({status: 'success', data: updatedCEA});
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({status: 'error', message: 'Internal Server Error'});
         }
     }
 
@@ -193,8 +221,10 @@ class AuthController {
             const mrfUser = await MRF.findOne({ userName });
             const ceaUser = await CEA.findOne({ userName });
             const adminUser = await Admin.findOne({ userName });
+
             let user;
             let role;
+
             if (mrfUser) {
                 user = mrfUser;
                 role = 'MRF';
@@ -207,10 +237,13 @@ class AuthController {
             } else {
                 return res.status(404).json({ status: 'error', message: 'User not found' });
             }
+
             if (!user.password) {
                 return res.status(401).json({ status: 'error', message: 'Password not set for the user' });
             }
+
             const validPassword = await bcrypt.compare(password, user.password);
+
             if (!validPassword) {
                 return res.status(401).json({ status: 'error', message: 'Invalid password' });
             } else {
@@ -218,19 +251,9 @@ class AuthController {
                 const lastName = user.lastName;
                 const userName = user.userName;
                 const userId = user.userId;
-                const token = jwt.sign({
-                    firstName,
-                    lastName,
-                    userName,
-                    userId,
-                    role
-                }, process.env.JWT_SECRET, {expiresIn: '1d'});
-                return res.cookie('token', token, {httpOnly: true}).status(200).json({
-                    status: 'success',
-                    message: 'Login successful',
-                    role,
-                    userId,
-                });
+                const token = jwt.sign({ firstName, lastName, userName, userId, role }, process.env.JWT_SECRET, {expiresIn: '1d'});
+
+                return res.cookie('token', token, {httpOnly: true}).status(200).json({ status: 'success', message: 'Login successful', role, userId, });
             }
         } catch (err) {
             console.error(err);
@@ -243,6 +266,7 @@ class AuthController {
             }
         }
     };
+
 
 
 

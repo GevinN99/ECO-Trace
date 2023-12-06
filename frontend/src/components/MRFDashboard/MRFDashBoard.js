@@ -55,7 +55,6 @@ class LineChart extends React.Component {
 }
 
 
-
 export default function MRFDashBoard() {
     const [auth, setAuth] = useState(false);
     const [message, setMessage] = useState("");
@@ -175,8 +174,6 @@ export default function MRFDashBoard() {
                 });
         }
     }, []);
-
-
 
     return (
         <div className={`MRFDashBoard ${auth ? "menuDisplayed" : ""}`}>
