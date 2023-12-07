@@ -134,7 +134,6 @@ class AuthController {
         }
     }
 
-
     async mrfRegister(req, res) {
         try {
             const {
@@ -191,6 +190,22 @@ class AuthController {
         } catch (err) {
             console.error(err);
             res.status(500).json({status: 'error', message: 'Error with Adding MRF.'});
+        }
+    }
+
+    async updateMRF(req, res) {
+        try {
+            const {userId} = req.params;
+            const {firstName, lastName, district, localAuthority, idOrPassportNumber, collectingLocationAddress, telephone, gpsLocation, userName, password} = req.body;
+            const hashedPassword = await bcrypt.hash(password, saltRounds);
+            const updatedMRF = await MRF.findOneAndUpdate({userId}, {firstName, lastName, district, localAuthority, idOrPassportNumber, collectingLocationAddress, telephone, gpsLocation, userName, password: hashedPassword}, {new: true});
+            if (!updatedMRF) {
+                return res.status(404).json({status: 'error', message: 'MRF not found'});
+            }
+            res.status(200).json({status: 'success', data: updatedMRF});
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({status: 'error', message: 'Internal Server Error'});
         }
     }
 

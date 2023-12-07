@@ -7,6 +7,7 @@ router.put('/updateAdmin/:userId', AuthController.updateAdmin);
 router.post('/ceaRegister', AuthController.ceaRegister)
 router.put('/updateCEA/:userId', AuthController.updateCEA);
 router.post('/mrfRegister', AuthController.mrfRegister);
+router.put('/updateMRF/:userId', AuthController.updateMRF);
 router.post('/login', AuthController.login);
 router.post('/verifyUser', AuthController.verifyUser);
 router.get('/logout', AuthController.logout);

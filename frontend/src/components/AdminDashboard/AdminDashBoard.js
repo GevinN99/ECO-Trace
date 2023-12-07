@@ -59,7 +59,7 @@ export default function AdminDashBoard() {
                         </div>
                         <div className="col-lg-3 col-md-6 text-center admin-box">
                             <h2>View MRF</h2>
-                            <Link to="/Admin/viewMRF" className="btn btn-dark">View</Link>
+                            <Link to="/allMRFs" className="btn btn-dark">View</Link>
                         </div>
                     </div>
                 </div>

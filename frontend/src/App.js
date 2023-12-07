@@ -25,6 +25,10 @@ import AdminProfile from "./components/AdminDashboard/AdminProfile";
 import AdminCEADashBoard from "./components/AdminDashboard/Admin-CEADashboard";
 import AllCEAs from "./components/AdminDashboard/AllCEAs";
 import CEAProfile from "./components/AdminDashboard/CEAProfile";
+import AllMRFs from "./components/AdminDashboard/AllMRFs";
+import MRFProfile from "./components/AdminDashboard/MRFProfile";
+import AdminMRFDashboard from "./components/AdminDashboard/Admin-MRFDashboard";
+import AdminSupplierPage from "./components/AdminDashboard/Admin-SupplierPage";
 
 function App() {
     return (
@@ -46,6 +50,10 @@ function App() {
                 <Route path="/AdminCEADashBoard" element={<AdminCEADashBoard/>}/>
                 <Route path="/allceas" element={<AllCEAs/>}/>
                 <Route path="/CEAProfile/:userId" element={<CEAProfile/>}/>
+                <Route path="/allMRFs" element={<AllMRFs/>}/>
+                <Route path="/MRFProfile/:userId" element={<MRFProfile/>}/>
+                <Route path="/AdminMRFDashboard/:userId" element={<AdminMRFDashboard />} />
+                <Route path="/getUserSuppliers/:userId" element={<AdminSupplierPage />} />
 
                 {/*  MRF Dashboard  */}
                 <Route path="/MRFDashBoard" element={<MRFDashBoard/>}/>

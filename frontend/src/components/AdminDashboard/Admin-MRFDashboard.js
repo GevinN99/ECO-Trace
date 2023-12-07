@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import moment from 'moment';
 import Chart from "react-apexcharts";
-import "./MRFDashBoard.css";
-import MRFNavBar from "./MRFNavBar";
+import "../MRFDashboard/MRFDashBoard.css";
+import AdminNavBar from "./AdminNavBar";
+import {IoChevronBackSharp} from "react-icons/io5";
 
 class LineChart extends React.Component {
     constructor(props) {
@@ -34,7 +35,10 @@ class LineChart extends React.Component {
                         categories: dates.map(date => date.substring(5, 10))
                     }
                 },
-                series: props.data ? Object.entries(props.data).map(([name, data]) => ({ name, data: Object.values(data) })) : []
+                series: props.data ? Object.entries(props.data).map(([name, data]) => ({
+                    name,
+                    data: Object.values(data)
+                })) : []
             };
         }
         return null;
@@ -46,7 +50,7 @@ class LineChart extends React.Component {
             <div className="LineChart">
                 <div className="row">
                     <div className="mixed-chart">
-                        <Chart options={this.state.options} series={this.state.series} type="line" width="500" />
+                        <Chart options={this.state.options} series={this.state.series} type="line" width="500"/>
                     </div>
                 </div>
             </div>
@@ -55,30 +59,14 @@ class LineChart extends React.Component {
 }
 
 
-export default function MRFDashBoard() {
-    const [auth, setAuth] = useState(false);
-    const [message, setMessage] = useState("");
+export default function AdminMRFDashboard() {
     const navigate = useNavigate();
-    const [showNav, setShowNav] = useState(false);
+    const userId = useParams().userId;
     axios.defaults.withCredentials = true;
 
-    useEffect(() => {
-        axios.get("http://localhost:8070/MRF/MRFDashBoard").then((response) => {
-            if (response.data.status === "success") {
-                navigate("/MRFDashboard");
-            } else {
-                setAuth(false);
-                setMessage(response.data.message);
-            }
-        }).catch((error) => {
-            console.error(error);
-        });
-    }, []);
-
-    const [dailySums, setDailySums] = useState({ PET: 0, HDPE: 0, LDPE: 0, PP: 0, PS: 0, PVC: 0 });
+    const [dailySums, setDailySums] = useState({PET: 0, HDPE: 0, LDPE: 0, PP: 0, PS: 0, PVC: 0});
 
     useEffect(() => {
-        const userId = localStorage.getItem('userId');
         if (userId) {
             axios.get(`http://localhost:8070/MRF/getSumLastDay/${userId}`)
                 .then((response) => {
@@ -97,31 +85,11 @@ export default function MRFDashBoard() {
     const [sumsLast7Days, setSumsLast7Days] = useState({});
 
     useEffect(() => {
-        const userId = localStorage.getItem('userId');
         if (userId) {
             axios.get(`http://localhost:8070/MRF/getSumsLast7Days/${userId}`)
                 .then((response) => {
                     if (response.data.status === 'success') {
                         setSumsLast7Days(response.data.data);
-                    } else {
-                        console.error(response.data.message);
-                    }
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }
-    }, []);
-
-    const [mrfProfile, setMrfProfile] = useState({});
-
-    useEffect(() => {
-        const userId = localStorage.getItem('userId');
-        if (userId) {
-            axios.get(`http://localhost:8070/MRF/viewMRFProfile/${userId}`)
-                .then((response) => {
-                    if (response.data.status === 'success') {
-                        setMrfProfile(response.data.data);
                     } else {
                         console.error(response.data.message);
                     }
@@ -142,23 +110,9 @@ export default function MRFDashBoard() {
         return acc;
     }, {});
 
-    const handleLogout = () => {
-        axios.get("http://localhost:8070/auth/logout").then((response) => {
-            if (response.data.status === "success") {
-                setAuth(false);
-                navigate("/login");
-            } else {
-                console.error(response.data.message);
-            }
-        }).catch((error) => {
-            console.error(error);
-        });
-    };
-
     const [sumsEachDayLastMonth, setSumsEachDayLastMonth] = useState({});
 
     useEffect(() => {
-        const userId = localStorage.getItem('userId');
         if (userId) {
             axios.get(`http://localhost:8070/MRF/getSumsEachDayLastMonth/${userId}`)
                 .then((response) => {
@@ -175,45 +129,22 @@ export default function MRFDashBoard() {
     }, []);
 
     return (
-        <div className={`MRFDashBoard ${auth ? "menuDisplayed" : ""}`}>
+        <div className="p-5">
             <div id="wrapper">
-                <div className="header-nav ">
-                    <MRFNavBar showNav={showNav} setShowNav={setShowNav} handleLogout={handleLogout}/>
-                    {showNav && (
-                        <div className={`bg-dark text-light p-5 position-fixed h-100 sidebar ${showNav ? 'show' : ''}`} style={{width: '300px'}}>
-                            <ul className="list-unstyled">
-                                <li className="text-center">User ID: {mrfProfile.userId}</li>
-                                <li className="text-center">User Name: {mrfProfile.userName}</li>
-                                <li className="text-center">First Name: {mrfProfile.firstName}</li>
-                                <li className="text-center">Last Name: {mrfProfile.lastName}</li>
-                                <li className="text-center">District: {mrfProfile.district}</li>
-                                <li className="text-center">Local Authority: {mrfProfile.localAuthority}</li>
-                                <li className="text-center">Id/Passport Number: {mrfProfile.idOrPassportNumber}</li>
-                                <li className="text-center">Collecting Location Address: {mrfProfile.collectingLocationAddress}</li>
-                                <li className="text-center">Telephone: {mrfProfile.telephone}</li>
-                                <li className="text-center">GPS Location: {mrfProfile.gpsLocation}</li>
-                            </ul>
-                        </div>
-                    )}
-                </div>
-
-                <div className="mrf-container">
-
-
+                <AdminNavBar/>
+                <div className="mrf-container p-3">
                     <div className="row">
-                        <div className="col-3"></div>
                         <div className="col-2">
-                            <button className="btn btn-dark mrf-btn" onClick={() => navigate("/CreateSupplier")}>
-                                Add New Supplier
-                            </button>
+                            <button className="btn btn-dark admin-btn" onClick={() => navigate(-1)}><IoChevronBackSharp/></button>
                         </div>
-                        <div className="col-2"></div>
-                        <div className="col-2">
-                            <button className="btn btn-dark mrf-btn" onClick={() => navigate("/ViewAllSuppliers")}>
-                                View ALl Suppliers
-                            </button>
+                        <div className="col-1"></div>
+                        <div className="col-6">
+                            <h1 className="text-center mb-4 fw-bold">MRF Dashboard</h1>
                         </div>
-                        <div className="col-3"></div>
+                        <div className="col"></div>
+                    </div>
+                    <div className="row d-flex justify-content-center align-content-center">
+                            <Link to={`/getUserSuppliers/${userId}`} className="btn btn-dark mrf-btn col-1">Suppliers</Link>
                     </div>
 
                     <br/>
@@ -272,7 +203,7 @@ export default function MRFDashBoard() {
                             </div>
                             <div className="mrf-graph-container d-flex justify-content-center align-items-center">
                                 <div className="mrf-graph">
-                                    <LineChart data={transformedData} />
+                                    <LineChart data={transformedData}/>
                                 </div>
                             </div>
                         </div>
