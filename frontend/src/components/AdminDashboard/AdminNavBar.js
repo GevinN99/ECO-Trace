@@ -31,6 +31,7 @@ export default function AdminNavBar() {
         axios.get("http://localhost:8070/auth/logout").then((response) => {
             if (response.data.status === "success") {
                 setAuth(false);
+                localStorage.clear();
                 navigate('/login');
             } else {
                 console.error(response.data.message);

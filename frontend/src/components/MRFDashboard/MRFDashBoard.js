@@ -132,6 +132,7 @@ export default function MRFDashBoard() {
         }
     }, []);
 
+    // Transform the data
     const transformedData = Object.entries(sumsLast7Days).reduce((acc, [date, categories]) => {
         Object.entries(categories).forEach(([category, sum]) => {
             if (!acc[category]) {
@@ -146,6 +147,7 @@ export default function MRFDashBoard() {
         axios.get("http://localhost:8070/auth/logout").then((response) => {
             if (response.data.status === "success") {
                 setAuth(false);
+                localStorage.clear();
                 navigate("/login");
             } else {
                 console.error(response.data.message);
