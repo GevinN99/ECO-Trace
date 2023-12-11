@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
-import axios from "axios";
-import moment from 'moment';
+import React, {useEffect, useRef, useState} from 'react';
+import {useReactToPrint} from 'react-to-print';
 import Chart from "react-apexcharts";
-import "./CEADashBoard.css";
-import CEANavBar from "./CEANavBar";
-import CEAPDF from "./CEAPDF";
+import {useNavigate} from "react-router-dom";
+import axios from "axios";
+import moment from "moment/moment";
+import logo from "../../assets/images/logo.png";
 
 class LineChart extends React.Component {
     constructor(props) {
@@ -35,7 +34,10 @@ class LineChart extends React.Component {
                         categories: dates.map(date => date.substring(5, 10))
                     }
                 },
-                series: props.data ? Object.entries(props.data).map(([name, data]) => ({ name, data: Object.values(data) })) : []
+                series: props.data ? Object.entries(props.data).map(([name, data]) => ({
+                    name,
+                    data: Object.values(data)
+                })) : []
             };
         }
         return null;
@@ -46,7 +48,7 @@ class LineChart extends React.Component {
             <div className="LineChart">
                 <div className="row">
                     <div className="mixed-chart">
-                        <Chart options={this.state.options} series={this.state.series} type="line" width="500" />
+                        <Chart options={this.state.options} series={this.state.series} type="line" width="500"/>
                     </div>
                 </div>
             </div>
@@ -54,25 +56,14 @@ class LineChart extends React.Component {
     }
 }
 
-export default function CEADashBoard() {
-    const [auth, setAuth] = useState(false);
-    const [message, setMessage] = useState("");
+function CEAPDF() {
+    const componentRef = useRef();
     const navigate = useNavigate();
-    const [showNav, setShowNav] = useState(false);
     axios.defaults.withCredentials = true;
 
-    useEffect(() => {
-        axios.get("http://localhost:8070/CEA/CEADashBoard").then((response) => {
-            if (response.data.status === "success") {
-                navigate("/CEADashboard");
-            } else {
-                setAuth(false);
-                setMessage(response.data.message);
-            }
-        }).catch((error) => {
-            console.error(error);
-        });
-    }, []);
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+    });
 
     const [dailySums, setDailySums] = useState({
         PET: 0,
@@ -116,28 +107,6 @@ export default function CEADashBoard() {
             });
     }, []);
 
-
-
-    const [ceaProfile, setCeaProfile] = useState({});
-
-    useEffect(() => {
-        const userId = localStorage.getItem('userId');
-        if (userId) {
-            axios.get(`http://localhost:8070/CEA/viewCEAProfile/${userId}`)
-                .then((response) => {
-                    if (response.data.status === 'success') {
-                        setCeaProfile(response.data.data);
-                    } else {
-                        console.error(response.data.message);
-                    }
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }
-    }, []);
-
-
     // Transform the data
     const transformedData = Object.entries(sumsLast7Days).reduce((acc, [date, categories]) => {
         Object.entries(categories).forEach(([category, sum]) => {
@@ -148,20 +117,6 @@ export default function CEADashBoard() {
         });
         return acc;
     }, {});
-
-    const handleLogout = () => {
-        axios.get("http://localhost:8070/auth/logout").then((response) => {
-            if (response.data.status === "success") {
-                setAuth(false);
-                localStorage.clear();
-                navigate("/login");
-            } else {
-                console.error(response.data.message);
-            }
-        }).catch((error) => {
-            console.error(error);
-        });
-    };
 
     const [sumsEachDayLastMonth, setSumsEachDayLastMonth] = useState({});
 
@@ -180,52 +135,38 @@ export default function CEADashBoard() {
     }, []);
 
     return (
-        <div className={`CEADashBoard ${auth ? "menuDisplayed" : ""}`}>
-            <div id="wrapper">
-                <div className="header-nav ">
-                    <CEANavBar showNav={showNav} setShowNav={setShowNav} handleLogout={handleLogout}/>
-                    {showNav && (
-                        <div className={`bg-dark text-light p-5 position-fixed h-100 sidebar ${showNav ? 'show' : ''}`} style={{width: '300px'}}>
-                            <ul className="list-unstyled">
-                                <ul className=" bg-dark">
-                                    <li className=" bg-dark text-center text-light">
-                                        <span>{`User ID  : ${ceaProfile.userId}`}</span></li>
-                                    <li className=" bg-dark text-center text-light">
-                                        <span>{`User Name    : ${ceaProfile.userName}`}</span></li>
-                                    <li className=" bg-dark text-center text-light">
-                                        <span>{`First Name   : ${ceaProfile.firstName}`}</span></li>
-                                    <li className=" bg-dark text-center text-light">
-                                        <span>{`Last Name    : ${ceaProfile.lastName}`}</span></li>
-                                    <li className=" bg-dark text-center text-light">
-                                        <span>{`Address : ${ceaProfile.address}`}</span></li>
-                                    <li className=" bg-dark text-center text-light">
-                                        <span>{`Employee ID  : ${ceaProfile.employeeId}`}</span></li>
-                                    <li className=" bg-dark text-center text-light">
-                                        <span>{`Occupation   : ${ceaProfile.occupation}`}</span></li>
-                                </ul>
-                            </ul>
-                        </div>
-                    )}
+        <div className="wrapper p-3">
+            <div className="row">
+                <div className="col-12 mb-3 text-center">
+                    <button className="btn btn-dark" onClick={handlePrint}>
+                        Download as PDF
+                    </button>
+                    <button className="btn btn-dark ms-2" onClick={() => navigate('/CEADashboard')}>
+                        Back to Dashboard
+                    </button>
                 </div>
-                <div className="cea-container">
-                    <div className="row">
-                        <div className="col-3"></div>
-                        <div className="col-2">
-                            <button className="btn btn-dark mrf-btn" onClick={() => navigate("/AllMRFUsers")}>
-                                MRF Users
-                            </button>
-                        </div>
-                        <div className="col-2"></div>
-                        <div className="col-2">
-                            <button className="btn btn-dark mrf-btn" onClick={() => navigate("/CEAPDF")}> Generate PDF
-                            </button>
-                        </div>
-                        <div className="col-3"></div>
+            </div>
+
+            <div ref={componentRef} className="p-3 bg-light">
+                {/* PDF Header */}
+                <div className="pdf-header">
+                    <div className="col  d-flex justify-content-center">
+                        <h1 className="cea-title">Central Environmental Authority</h1>
                     </div>
+                    <div className="col  d-flex justify-content-center">
+                        <h3 className="cea-subtitle ">Plastic Collection Center</h3>
+                    </div>
+                    <div className="col d-flex justify-content-center">
+                        <img src={logo} className="img-fluid" alt="Eco-Trace" style={{
+                            width: '15%',
+                            height: '5%'
+                        }}/>
+                    </div>
+                </div>
 
-                    <br/>
-                    <br/>
+                <hr/>
 
+                <div className="cea-container">
                     <div className="row">
                         <div className="col">
                             <table className="table caption-top table-hover">
@@ -271,12 +212,15 @@ export default function CEADashBoard() {
                                 </tbody>
                             </table>
                         </div>
+
                         {/*Line Graph*/}
                         <div className="col">
-                            <div className="cea-graph-container d-flex justify-content-center align-items-center">- Amounts Collected In a Month -</div>
+                            <div className="cea-graph-container d-flex justify-content-center align-items-center">-
+                                Amounts Collected In a Month -
+                            </div>
                             <div className="cea-graph-container d-flex justify-content-center align-items-center">
                                 <div className="cea-graph">
-                                    <LineChart data={transformedData} />
+                                    <LineChart data={transformedData}/>
                                 </div>
                             </div>
                         </div>
@@ -322,5 +266,8 @@ export default function CEADashBoard() {
                 </div>
             </div>
         </div>
-    );
+    )
+        ;
 }
+
+export default CEAPDF;

@@ -15,4 +15,9 @@ const PrivateRouteMRF = () => {
     return (userId && userId.startsWith('MRF')) ? <Outlet /> : <Navigate to="/login" />;
 };
 
+const PrivateRoute = () => {
+    const userId = localStorage.getItem('userId');
+    return userId ? <Outlet /> : <Navigate to="/login" />;
+};
+
 export { PrivateRouteAdmin, PrivateRouteCEA, PrivateRouteMRF };

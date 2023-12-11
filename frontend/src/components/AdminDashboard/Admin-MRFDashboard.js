@@ -6,6 +6,7 @@ import Chart from "react-apexcharts";
 import "../MRFDashboard/MRFDashBoard.css";
 import AdminNavBar from "./AdminNavBar";
 import {IoChevronBackSharp} from "react-icons/io5";
+import Footer from "../Footer";
 
 class LineChart extends React.Component {
     constructor(props) {
@@ -129,6 +130,7 @@ export default function AdminMRFDashboard() {
     }, []);
 
     return (
+        <div className="AdminMRFDashBoard">
         <div className="p-5">
             <div id="wrapper">
                 <AdminNavBar/>
@@ -251,6 +253,8 @@ export default function AdminMRFDashboard() {
                     </div>
                 </div>
             </div>
+        </div>
+            <Footer/>
         </div>
     );
 }

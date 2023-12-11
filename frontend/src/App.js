@@ -29,6 +29,8 @@ import AllMRFs from "./components/AdminDashboard/AllMRFs";
 import MRFProfile from "./components/AdminDashboard/MRFProfile";
 import AdminMRFDashboard from "./components/AdminDashboard/Admin-MRFDashboard";
 import AdminSupplierPage from "./components/AdminDashboard/Admin-SupplierPage";
+import Footer from "./components/Footer";
+import CEAPDF from "./components/CEADashboard/CEAPDF";
 
 
 function App() {
@@ -72,6 +74,12 @@ function App() {
                     <Route path="/AllMRFUsers" element={<AllMRFUsers/>}/>
                     <Route path="/cea-mrf-dashboard/:userId" element={<CEAMRFDashBoard/>}/>
                     <Route path="/CEASupplierPage/:userId" element={<CEASupplierPage/>}/>
+                    <Route path="/CEAPDF" element={<CEAPDF/>}/>
+                </Route>
+
+                {/*  Private Routes  */}
+                <Route element={<PrivateRouteAdmin/>}>
+                    <Route path="/footer" element={<Footer/>}/>
                 </Route>
 
                 <Route path="/login" element={<LoginPage/>}/>

@@ -4,6 +4,7 @@ import axios from "axios";
 import "./AdminDashBoard.css";
 import AdminNavBar from "./AdminNavBar";
 import AdminCEADashBoard from "./Admin-CEADashboard";
+import Footer from "../Footer";
 
 export default function AdminDashBoard() {
     const [auth, setAuth] = useState(false);
@@ -64,6 +65,7 @@ export default function AdminDashBoard() {
                     </div>
                 </div>
             </div>
+            <Footer/>
         </div>
     );
 }
