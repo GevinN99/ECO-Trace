@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AdminNavBar from "./AdminNavBar";
 import {IoChevronBackSharp} from "react-icons/io5";
-import { MdDelete } from "react-icons/md";
+import Footer from "../Footer";
 
 export default function AllAdmins() {
     const navigate = useNavigate();
@@ -29,6 +28,7 @@ export default function AllAdmins() {
     }, []);
 
     return (
+        <div>
         <div className="container pt-5">
             <br/>
             <AdminNavBar/>
@@ -67,6 +67,8 @@ export default function AllAdmins() {
                     </tbody>
                 </table>
             </div>
+        </div>
+            <Footer/>
         </div>
     );
 }

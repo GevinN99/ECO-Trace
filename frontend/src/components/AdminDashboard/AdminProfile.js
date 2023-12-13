@@ -4,6 +4,7 @@ import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {IoChevronBackSharp, IoTrashBinSharp} from "react-icons/io5";
 import AdminNavBar from "./AdminNavBar";
+import Footer from "../Footer";
 
 export default function AdminDashboard() {
     const {userId} = useParams();
@@ -71,6 +72,7 @@ export default function AdminDashboard() {
 
 
     return (
+        <div>
         <div className="container py-5">
             <AdminNavBar/>
             <div className="row justify-content-center p-5">
@@ -112,6 +114,8 @@ export default function AdminDashboard() {
                     </div>
                 </div>
             </div>
+        </div>
+            <Footer/>
         </div>
     );
 }

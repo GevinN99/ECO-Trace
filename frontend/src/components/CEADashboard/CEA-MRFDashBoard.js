@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
-import { useParams } from 'react-router-dom';
+import {Link, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import moment from 'moment';
 import Chart from "react-apexcharts";
 import "../MRFDashboard/MRFDashBoard.css";
-import { IoChevronBackSharp } from "react-icons/io5";
+import {IoChevronBackSharp} from "react-icons/io5";
 import CEANavBar from "./CEANavBar";
+import Footer from "../Footer";
 
 class LineChart extends React.Component {
     constructor(props) {
@@ -130,6 +130,7 @@ export default function CEAMRFDashBoard() {
 
 
     return (
+        <div>
             <div id="wrapper">
                 <div className="mrf-container pt-5">
                     <br/>
@@ -256,6 +257,8 @@ export default function CEAMRFDashBoard() {
                     </div>
                 </div>
             </div>
+            <Footer/>
+        </div>
     );
 }
 

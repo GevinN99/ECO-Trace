@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import axios from "axios";
 import MRFNavBar from "./MRFNavBar";
 import {useNavigate} from "react-router-dom";
+import Footer from "../Footer";
 
 export default function SupplierCollection() {
     const userId = localStorage.getItem('userId');
@@ -42,6 +43,7 @@ export default function SupplierCollection() {
     };
 
     return (
+        <div>
         <div className="d-flex justify-content-center align-items-center supplier-page" style={{height: "100%"}}>
             <MRFNavBar showNav={showNav} setShowNav={setShowNav}/>
             <div className="supplier-form-box p-5">
@@ -78,6 +80,8 @@ export default function SupplierCollection() {
                     </div>
                 </form>
             </div>
+        </div>
+            <Footer/>
         </div>
     );
 }

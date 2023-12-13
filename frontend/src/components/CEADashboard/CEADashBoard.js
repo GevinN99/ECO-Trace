@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import moment from 'moment';
 import Chart from "react-apexcharts";
 import "./CEADashBoard.css";
 import CEANavBar from "./CEANavBar";
-import CEAPDF from "./CEAPDF";
+import Footer from "../Footer";
 
 class LineChart extends React.Component {
     constructor(props) {
@@ -180,147 +180,155 @@ export default function CEADashBoard() {
     }, []);
 
     return (
-        <div className={`CEADashBoard ${auth ? "menuDisplayed" : ""}`}>
-            <div id="wrapper">
-                <div className="header-nav ">
-                    <CEANavBar showNav={showNav} setShowNav={setShowNav} handleLogout={handleLogout}/>
-                    {showNav && (
-                        <div className={`bg-dark text-light p-5 position-fixed h-100 sidebar ${showNav ? 'show' : ''}`} style={{width: '300px'}}>
-                            <ul className="list-unstyled">
-                                <ul className=" bg-dark">
-                                    <li className=" bg-dark text-center text-light">
-                                        <span>{`User ID  : ${ceaProfile.userId}`}</span></li>
-                                    <li className=" bg-dark text-center text-light">
-                                        <span>{`User Name    : ${ceaProfile.userName}`}</span></li>
-                                    <li className=" bg-dark text-center text-light">
-                                        <span>{`First Name   : ${ceaProfile.firstName}`}</span></li>
-                                    <li className=" bg-dark text-center text-light">
-                                        <span>{`Last Name    : ${ceaProfile.lastName}`}</span></li>
-                                    <li className=" bg-dark text-center text-light">
-                                        <span>{`Address : ${ceaProfile.address}`}</span></li>
-                                    <li className=" bg-dark text-center text-light">
-                                        <span>{`Employee ID  : ${ceaProfile.employeeId}`}</span></li>
-                                    <li className=" bg-dark text-center text-light">
-                                        <span>{`Occupation   : ${ceaProfile.occupation}`}</span></li>
+        <div>
+            <div className={`CEADashBoard ${auth ? "menuDisplayed" : ""}`}>
+                <div id="wrapper">
+                    <div className="header-nav ">
+                        <CEANavBar showNav={showNav} setShowNav={setShowNav} handleLogout={handleLogout}/>
+                        {showNav && (
+                            <div
+                                className={`bg-dark text-light p-5 position-fixed h-100 sidebar ${showNav ? 'show' : ''}`}
+                                style={{width: '300px'}}>
+                                <ul className="list-unstyled">
+                                    <ul className=" bg-dark">
+                                        <li className=" bg-dark text-center text-light">
+                                            <span>{`User ID  : ${ceaProfile.userId}`}</span></li>
+                                        <li className=" bg-dark text-center text-light">
+                                            <span>{`User Name    : ${ceaProfile.userName}`}</span></li>
+                                        <li className=" bg-dark text-center text-light">
+                                            <span>{`First Name   : ${ceaProfile.firstName}`}</span></li>
+                                        <li className=" bg-dark text-center text-light">
+                                            <span>{`Last Name    : ${ceaProfile.lastName}`}</span></li>
+                                        <li className=" bg-dark text-center text-light">
+                                            <span>{`Address : ${ceaProfile.address}`}</span></li>
+                                        <li className=" bg-dark text-center text-light">
+                                            <span>{`Employee ID  : ${ceaProfile.employeeId}`}</span></li>
+                                        <li className=" bg-dark text-center text-light">
+                                            <span>{`Occupation   : ${ceaProfile.occupation}`}</span></li>
+                                    </ul>
                                 </ul>
-                            </ul>
-                        </div>
-                    )}
-                </div>
-                <div className="cea-container">
-                    <div className="row">
-                        <div className="col-3"></div>
-                        <div className="col-2">
-                            <button className="btn btn-dark mrf-btn" onClick={() => navigate("/AllMRFUsers")}>
-                                MRF Users
-                            </button>
-                        </div>
-                        <div className="col-2"></div>
-                        <div className="col-2">
-                            <button className="btn btn-dark mrf-btn" onClick={() => navigate("/CEAPDF")}> Generate PDF
-                            </button>
-                        </div>
-                        <div className="col-3"></div>
+                            </div>
+                        )}
                     </div>
-
-                    <br/>
-                    <br/>
-
-                    <div className="row">
-                        <div className="col">
-                            <table className="table caption-top table-hover">
-                                <caption className="cea-container-table"> - Amounts Collected In a Day -</caption>
-                                <thead>
-                                <tr>
-                                    <th scope="col"></th>
-                                    <th scope="col">Type of Plastic</th>
-                                    <th scope="col">Quantity (Kg)</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Polyethylene terephthalate (PET)</td>
-                                    <td>{dailySums.PET}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>High-density polyethylene (HDPE)</td>
-                                    <td>{dailySums.HDPE}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Low-density polyethylene (LDPE)</td>
-                                    <td>{dailySums.LDPE}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">4</th>
-                                    <td>Polypropylene (PP)</td>
-                                    <td>{dailySums.PP}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">5</th>
-                                    <td>Polystyrene (PS)</td>
-                                    <td>{dailySums.PS}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">6</th>
-                                    <td>Polyvinyl chloride (PVC)</td>
-                                    <td>{dailySums.PVC}</td>
-                                </tr>
-                                </tbody>
-                            </table>
+                    <div className="cea-container">
+                        <div className="row">
+                            <div className="col-3"></div>
+                            <div className="col-2">
+                                <button className="btn btn-dark mrf-btn" onClick={() => navigate("/AllMRFUsers")}>
+                                    MRF Users
+                                </button>
+                            </div>
+                            <div className="col-2"></div>
+                            <div className="col-2">
+                                <button className="btn btn-dark mrf-btn" onClick={() => navigate("/CEAPDF")}> Generate
+                                    PDF
+                                </button>
+                            </div>
+                            <div className="col-3"></div>
                         </div>
-                        {/*Line Graph*/}
-                        <div className="col">
-                            <div className="cea-graph-container d-flex justify-content-center align-items-center">- Amounts Collected In a Month -</div>
-                            <div className="cea-graph-container d-flex justify-content-center align-items-center">
-                                <div className="cea-graph">
-                                    <LineChart data={transformedData} />
+
+                        <br/>
+                        <br/>
+
+                        <div className="row">
+                            <div className="col">
+                                <table className="table caption-top table-hover">
+                                    <caption className="cea-container-table"> - Amounts Collected In a Day -</caption>
+                                    <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Type of Plastic</th>
+                                        <th scope="col">Quantity (Kg)</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Polyethylene terephthalate (PET)</td>
+                                        <td>{dailySums.PET}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>High-density polyethylene (HDPE)</td>
+                                        <td>{dailySums.HDPE}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Low-density polyethylene (LDPE)</td>
+                                        <td>{dailySums.LDPE}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">4</th>
+                                        <td>Polypropylene (PP)</td>
+                                        <td>{dailySums.PP}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">5</th>
+                                        <td>Polystyrene (PS)</td>
+                                        <td>{dailySums.PS}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">6</th>
+                                        <td>Polyvinyl chloride (PVC)</td>
+                                        <td>{dailySums.PVC}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            {/*Line Graph*/}
+                            <div className="col">
+                                <div className="cea-graph-container d-flex justify-content-center align-items-center">-
+                                    Amounts Collected In a Month -
+                                </div>
+                                <div className="cea-graph-container d-flex justify-content-center align-items-center">
+                                    <div className="cea-graph">
+                                        <LineChart data={transformedData}/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <br/>
-                    <br/>
-                    <div className="row">
-                        <div className="col">
-                            <div className="col-md-12">
-                                <div className="cea-container-table">- Amounts Collected In a Month -</div>
-                            </div>
-                            <br/>
-                            <table className="table table-striped table-hover">
-                                <thead>
-                                <tr>
-                                    <th scope="col"></th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">PET (Kg)</th>
-                                    <th scope="col">HDPE (Kg)</th>
-                                    <th scope="col">LDPE (Kg)</th>
-                                    <th scope="col">PP (Kg)</th>
-                                    <th scope="col">PS (Kg)</th>
-                                    <th scope="col">PVC (Kg)</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {Object.entries(sumsEachDayLastMonth).map(([date, sums], index) => (
-                                    <tr key={index}>
-                                        <th scope="row">{index + 1}</th>
-                                        <td>{moment(date, 'YYYY-MM-DD').format('DD-MM')}</td>
-                                        <td>{sums.PET}</td>
-                                        <td>{sums.HDPE}</td>
-                                        <td>{sums.LDPE}</td>
-                                        <td>{sums.PP}</td>
-                                        <td>{sums.PS}</td>
-                                        <td>{sums.PVC}</td>
+                        <br/>
+                        <br/>
+                        <div className="row">
+                            <div className="col">
+                                <div className="col-md-12">
+                                    <div className="cea-container-table">- Amounts Collected In a Month -</div>
+                                </div>
+                                <br/>
+                                <table className="table table-striped table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">PET (Kg)</th>
+                                        <th scope="col">HDPE (Kg)</th>
+                                        <th scope="col">LDPE (Kg)</th>
+                                        <th scope="col">PP (Kg)</th>
+                                        <th scope="col">PS (Kg)</th>
+                                        <th scope="col">PVC (Kg)</th>
                                     </tr>
-                                ))}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                    {Object.entries(sumsEachDayLastMonth).map(([date, sums], index) => (
+                                        <tr key={index}>
+                                            <th scope="row">{index + 1}</th>
+                                            <td>{moment(date, 'YYYY-MM-DD').format('DD-MM')}</td>
+                                            <td>{sums.PET}</td>
+                                            <td>{sums.HDPE}</td>
+                                            <td>{sums.LDPE}</td>
+                                            <td>{sums.PP}</td>
+                                            <td>{sums.PS}</td>
+                                            <td>{sums.PVC}</td>
+                                        </tr>
+                                    ))}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <Footer/>
         </div>
     );
 }

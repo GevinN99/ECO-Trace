@@ -4,8 +4,8 @@ import moment from 'moment';
 import Chart from "react-apexcharts";
 import AdminNavBar from "./AdminNavBar";
 import {Link, useNavigate} from "react-router-dom";
-import AllCEAs from "./AllCEAs";
 import {IoChevronBackSharp} from "react-icons/io5";
+import Footer from "../Footer";
 
 class LineChart extends React.Component {
     constructor(props) {
@@ -116,6 +116,7 @@ export default function AdminCEADashBoard() {
     }, {});
 
     return (
+        <div>
         <div className="AdminCEADashBoard p-5">
             <AdminNavBar/>
             <div className="p-5">
@@ -223,6 +224,9 @@ export default function AdminCEADashBoard() {
                 </div>
             </div>
             </div>
+
+        </div>
+            <Footer/>
         </div>
     );
 }

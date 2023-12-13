@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import MRFNavBar from "./MRFNavBar";
 import {useNavigate} from "react-router-dom";
+import Footer from "../Footer";
 
 export default function CreateSupplier() {
 
@@ -55,6 +56,7 @@ export default function CreateSupplier() {
     };
 
     return (
+        <div>
         <div className="container d-flex justify-content-center" style={{height: "100%"}}>
             <MRFNavBar showNav={showNav} setShowNav={setShowNav} />
             <div className="supplier-form-box col-md-8 p-5">
@@ -100,6 +102,8 @@ export default function CreateSupplier() {
                     </div>
                 </form>
             </div>
+        </div>
+            <Footer/>
         </div>
     );
 }

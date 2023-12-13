@@ -2,7 +2,6 @@ import React from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {PrivateRouteAdmin, PrivateRouteCEA, PrivateRouteMRF} from './utils/PrivateRoute';
 import LoginPage from "./components/LoginPage";
-import HomePage from "./components/HomePage";
 import WelcomePage from "./components/WelcomePage";
 import CreateAdminPage from "./components/AdminDashboard/CreateAdminPage";
 import CreateMRFPage from "./components/AdminDashboard/CreateMRFPage";
@@ -83,7 +82,6 @@ function App() {
                 </Route>
 
                 <Route path="/login" element={<LoginPage/>}/>
-                <Route path="/home" element={<HomePage/>}/>
                 <Route path="/" element={<WelcomePage/>}/>
 
             </Routes>

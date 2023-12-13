@@ -5,6 +5,7 @@ import moment from 'moment';
 import Chart from "react-apexcharts";
 import "./MRFDashBoard.css";
 import MRFNavBar from "./MRFNavBar";
+import Footer from "../Footer";
 
 class LineChart extends React.Component {
     constructor(props) {
@@ -177,6 +178,7 @@ export default function MRFDashBoard() {
     }, []);
 
     return (
+        <div className="MRFDashBoard">
         <div className={`MRFDashBoard ${auth ? "menuDisplayed" : ""}`}>
             <div id="wrapper">
                 <div className="header-nav ">
@@ -322,6 +324,8 @@ export default function MRFDashBoard() {
                     </div>
                 </div>
             </div>
+        </div>
+            <Footer/>
         </div>
     );
 }

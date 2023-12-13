@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {IoChevronBackSharp, IoTrashBinSharp} from "react-icons/io5";
 import {useNavigate, useParams} from "react-router-dom";
 import AdminNavBar from "./AdminNavBar";
+import Footer from "../Footer";
 
 export default function CEAProfile() {
     const navigate = useNavigate();
@@ -54,6 +55,7 @@ export default function CEAProfile() {
     };
 
     return (
+        <div>
         <div className="container py-5">
             <AdminNavBar/>
             <div className="row justify-content-center p-5">
@@ -104,5 +106,7 @@ export default function CEAProfile() {
                 </div>
             </div>
         </div>
+        <Footer/>
+    </div>
     );
 }

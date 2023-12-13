@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import AdminNavBar from "./AdminNavBar";
 import {IoChevronBackSharp} from "react-icons/io5";
+import Footer from "../Footer";
 
 export default function AdminSupplierPage() {
     const navigate = useNavigate();
@@ -53,6 +54,7 @@ export default function AdminSupplierPage() {
     };
 
     return (
+        <div>
         <div className="container mt-5 pt-5">
             <AdminNavBar />
             <div className="row">
@@ -65,7 +67,7 @@ export default function AdminSupplierPage() {
                 </div>
                 <div className="col"></div>
             </div>
-            <table className="table table-striped">
+            <table className="table table-striped pb-5">
                 <thead>
                 <tr>
                     <th scope="col">Supplier Name</th>
@@ -123,6 +125,8 @@ export default function AdminSupplierPage() {
                 ))}
                 </tbody>
             </table>
+        </div>
+            <Footer/>
         </div>
     );
 }

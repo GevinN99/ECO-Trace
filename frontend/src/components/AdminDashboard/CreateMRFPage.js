@@ -3,6 +3,7 @@ import axios from "axios";
 import "./CraeteMRFPage.css";
 import AdminNavBar from "./AdminNavBar";
 import {useNavigate} from "react-router-dom";
+import Footer from "../Footer";
 
 export default function CreateNewMRFPage() {
     const navigate = useNavigate();
@@ -57,6 +58,7 @@ export default function CreateNewMRFPage() {
     };
 
     return (
+        <div>
         <div className="SignupPage">
             <AdminNavBar/>
             <div className="mrf-form-box p-5">
@@ -157,6 +159,8 @@ export default function CreateNewMRFPage() {
                     </div>
                 </form>
             </div>
+        </div>
+            <Footer/>
         </div>
     );
 

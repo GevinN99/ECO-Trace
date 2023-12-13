@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import AdminNavBar from "./AdminNavBar";
 import {IoChevronBackSharp} from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
+import Footer from "../Footer";
 
 export default function AllCEAs() {
     const navigate = useNavigate();
@@ -29,7 +30,8 @@ export default function AllCEAs() {
     }, []);
 
     return (
-        <div className="container pt-5">
+        <div>
+        <div className="container pt-5 pb-5">
             <AdminNavBar/>
             <div className="row p-5">
                 <div className="col-2">
@@ -66,5 +68,7 @@ export default function AllCEAs() {
                 </table>
             </div>
         </div>
+    <Footer/>
+    </div>
     );
 }

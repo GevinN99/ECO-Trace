@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import AdminNavBar from "./AdminNavBar";
+import Footer from "../Footer";
 
 export default function CreateAdminPage() {
     const navigate = useNavigate();
@@ -40,6 +41,7 @@ export default function CreateAdminPage() {
     };
 
     return (
+        <div>
         <div className="SignupPage container-fluid">
             <div className="row justify-content-center p-3">
                 <AdminNavBar/>
@@ -79,6 +81,8 @@ export default function CreateAdminPage() {
                     </div>
                 </form>
             </div>
+        </div>
+            <Footer/>
         </div>
     );
 }

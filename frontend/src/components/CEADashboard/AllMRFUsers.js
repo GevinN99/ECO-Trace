@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CEANavBar from "./CEANavBar";
 import {IoChevronBackSharp} from "react-icons/io5";
+import Footer from "../Footer";
 
 export default function AllMRFUsers() {
     const navigate = useNavigate();
@@ -26,6 +26,7 @@ export default function AllMRFUsers() {
     }, []);
 
     return (
+        <div>
         <div className="container pt-5">
             <br/>
             <CEANavBar showNav={showNav} setShowNav={setShowNav}/>
@@ -44,7 +45,7 @@ export default function AllMRFUsers() {
                 <div className="col"></div>
             </div>
 
-            <div className="table-responsive">
+            <div className="table-responsive pb-5">
                 <table className="table table-striped table-hover">
                     <thead>
                     <tr>
@@ -70,6 +71,8 @@ export default function AllMRFUsers() {
                     </tbody>
                 </table>
             </div>
+        </div>
+            <Footer/>
         </div>
     );
 }

@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import MRFNavBar from "./MRFNavBar";
+import Footer from "../Footer";
 
 export default function SupplierPage() {
 
@@ -18,6 +19,7 @@ export default function SupplierPage() {
     }, [userId]);
 
     return (
+        <div>
         <div className="container mt-5 pt-5">
             <MRFNavBar showNav={showNav} setShowNav={setShowNav} />
             <h1 className="text-center mb-4 fw-bold">My Suppliers</h1>
@@ -33,6 +35,8 @@ export default function SupplierPage() {
                     </div>
                 </div>
             ))}
+        </div>
+            <Footer/>
         </div>
     );
 }

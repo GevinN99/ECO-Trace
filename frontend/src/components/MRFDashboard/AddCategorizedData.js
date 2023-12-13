@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import axios from "axios";
 import MRFNavBar from "./MRFNavBar";
 import {useNavigate} from "react-router-dom";
+import Footer from "../Footer";
 
 export default function CategoryCreation() {
     const navigate = useNavigate();
@@ -51,6 +52,7 @@ export default function CategoryCreation() {
     };
 
     return (
+        <div>
         <div className="d-flex justify-content-center vh-90">
             <MRFNavBar showNav={showNav} setShowNav={setShowNav} />
             <div className="supplier-form-box col-md-8 col-sm-12 p-5">
@@ -98,6 +100,8 @@ export default function CategoryCreation() {
                     </div>
                 </form>
             </div>
+        </div>
+            <Footer/>
         </div>
     );
 }

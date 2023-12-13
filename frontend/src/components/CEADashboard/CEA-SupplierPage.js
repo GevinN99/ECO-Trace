@@ -3,6 +3,7 @@ import axios from "axios";
 import {useNavigate, useParams} from "react-router-dom";
 import CEANavBar from "./CEANavBar";
 import {IoChevronBackSharp} from "react-icons/io5";
+import Footer from "../Footer";
 
 export default function CEASupplierPage() {
     const {userId} = useParams();
@@ -21,6 +22,7 @@ export default function CEASupplierPage() {
     }, [userId]);
 
     return (
+        <div>
         <div className="container mt-5 pt-5">
             <CEANavBar showNav={showNav} setShowNav={setShowNav}/>
 
@@ -50,6 +52,8 @@ export default function CEASupplierPage() {
                     </div>
                 </div>
             ))}
+        </div>
+            <Footer/>
         </div>
     );
 }

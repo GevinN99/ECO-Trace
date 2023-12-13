@@ -3,6 +3,7 @@ import axios from "axios";
 import "./CreateCEAPage.css";
 import AdminNavBar from "./AdminNavBar";
 import {useNavigate} from "react-router-dom";
+import Footer from "../Footer";
 
 export default function CreateNewCEAPage() {
     const navigate = useNavigate();
@@ -45,6 +46,7 @@ export default function CreateNewCEAPage() {
     };
 
     return (
+        <div>
         <div className="SignupPage">
             <AdminNavBar/>
             <div className="cea-form-box p-5">
@@ -158,6 +160,8 @@ export default function CreateNewCEAPage() {
                     </div>
                 </form>
             </div>
+        </div>
+            <Footer/>
         </div>
     );
 }
