@@ -149,6 +149,48 @@ class MRFController {
         }
     }
 
+    async getUserSupplier(req, res) {
+        const {supplierId} = req.params;
+
+        try {
+            const supplier = await Supplier.findOne({supplierId});
+            if (!supplier) {
+                return res.status(404).json({status: 'error', message: 'Supplier not found'});
+            }
+            res.status(200).json({
+                status: 'success',
+                data: supplier
+            });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({
+                status: 'error',
+                message: 'An error occurred while fetching the supplier'
+            });
+        }
+    }
+
+    async getSupplierCollections(req, res) {
+        const {supplierId} = req.params;
+
+        try {
+            const collections = await Collection.find({supplierId});
+            if (!collections) {
+                return res.status(404).json({status: 'error', message: 'Collections not found'});
+            }
+            res.status(200).json({
+                status: 'success',
+                data: collections
+            });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({
+                status: 'error',
+                message: 'An error occurred while fetching the collections'
+            });
+        }
+    }
+
     async createCategory(req, res) {
         const { userId, PET, HDPE, LDPE, PP, PS, PVC } = req.body;
 

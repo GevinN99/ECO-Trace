@@ -9,6 +9,8 @@ router.post('/createCollection', MRFController.createCollection);
 router.post('/createSupplier', MRFController.createSupplier);
 router.get('/generateSupplierId', MRFController.generateSupplierId);
 router.get('/getUserSuppliers/:userId', MRFController.getUserSuppliers);
+router.get('/getUserSupplier/:supplierId', MRFController.getUserSupplier);
+router.get('/getSupplierCollections/:supplierId', MRFController.getSupplierCollections);
 router.post('/createCategory', MRFController.createCategory);
 router.get('/getSumsEachDayLastMonth/:userId', MRFController.getSumsEachDayLastMonth);
 router.get('/getSumLastDay/:userId', MRFController.getSumLastDay);

@@ -2,8 +2,12 @@ import React, {useState} from "react";
 import axios from "axios";
 import "./LoginPage.css";
 import {useNavigate} from "react-router-dom";
+import {Button, Form, FormGroup, Input, Label} from 'reactstrap';
+import {IoMdSunny} from "react-icons/io";
+import {GiMoon} from "react-icons/gi";
 
 export default function LoginPage() {
+    const [darkMode, setDarkMode] = useState(false);
     const [values, setValues] = useState({ userName: "", password: "" });
     const navigate = useNavigate();
     axios.defaults.withCredentials = true;
@@ -37,21 +41,42 @@ export default function LoginPage() {
         setValues({ ...values, [name]: value });
     };
 
+    const handleDarkModeToggle = () => {
+        setDarkMode(!darkMode);
+        document.body.classList.toggle('dark-mode');
+    };
+
     return (
-        <div className="LoginPage d-flex align-items-center justify-content-center">
-            <div className="form-box p-5">
-                <h1 className="text-center mb-4">Sign In</h1>
-                <form onSubmit={handleSubmit}>
-                    <div className="form-outline mb-4">
-                        <input type="text" name="userName" placeholder='Enter User-Name' value={values.userName} onChange={handleInputChange} className="form-control" />
+        <div className={`LoginPage ${darkMode ? 'dark-mode' : ''}`}>
+
+            <div onClick={handleDarkModeToggle} className="dark-mode-toggle ">
+                <div className="row text-center">
+                    <div className="col">
+                        {darkMode ? <IoMdSunny className="lite-btn"/> : <GiMoon className="dark-btn"/>}
                     </div>
-                    <div className="form-outline mb-4">
-                        <input type="password" placeholder='Enter Password' name="password" value={values.password} onChange={handleInputChange} className="form-control" />
+                    <div className="col>">
+                        {darkMode ? <div style={{fontSize:10}}>Light Mode</div> : <div style={{fontSize:10}}>Dark Mode</div>}
                     </div>
-                    <div className="form-outline mb-4 justify-content-center align-content-center">
-                        <button type='submit' className="btn btn-dark w-100">Sign in</button>
+                </div>
                     </div>
-                </form>
+
+            <div className="form-box">
+                <h1 className="text-center text-light mb-4">Sign In</h1>
+                <Form onSubmit={handleSubmit}>
+                    <FormGroup>
+                        <Label for="userName" className="text-light">Username</Label>
+                        <Input type="text" name="userName" id="userName" value={values.userName}
+                               onChange={handleInputChange} className="form-control"/>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="password" className="text-light">Password</Label>
+                        <Input type="password" name="password" id="password" value={values.password}
+                               onChange={handleInputChange} className="form-control"/>
+                    </FormGroup>
+                    <div className="pt-3 pb-3">
+                        <Button className="custom-btn w-100">Sign in</Button>
+                    </div>
+                </Form>
             </div>
         </div>
     );

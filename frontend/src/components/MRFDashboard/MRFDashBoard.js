@@ -184,26 +184,28 @@ export default function MRFDashBoard() {
                 <div className="header-nav ">
                     <MRFNavBar showNav={showNav} setShowNav={setShowNav} handleLogout={handleLogout}/>
                     {showNav && (
-                        <div className={`bg-dark text-light p-5 position-fixed h-100 sidebar ${showNav ? 'show' : ''}`} style={{width: '300px'}}>
+                        <div className={`bg-dark text-light p-5 position-fixed h-100 sidebar ${showNav ? 'show' : ''}`}
+                             style={{width: '300px'}}>
+                            <h3 className="text-center mb-4">User Profile</h3>
                             <ul className="list-unstyled">
-                                <li className="text-center">User ID: {mrfProfile.userId}</li>
-                                <li className="text-center">User Name: {mrfProfile.userName}</li>
-                                <li className="text-center">First Name: {mrfProfile.firstName}</li>
-                                <li className="text-center">Last Name: {mrfProfile.lastName}</li>
-                                <li className="text-center">District: {mrfProfile.district}</li>
-                                <li className="text-center">Local Authority: {mrfProfile.localAuthority}</li>
-                                <li className="text-center">Id/Passport Number: {mrfProfile.idOrPassportNumber}</li>
-                                <li className="text-center">Collecting Location Address: {mrfProfile.collectingLocationAddress}</li>
-                                <li className="text-center">Telephone: {mrfProfile.telephone}</li>
-                                <li className="text-center">GPS Location: {mrfProfile.gpsLocation}</li>
+                                <li><strong>User ID:</strong> {mrfProfile.userId}</li>
+                                <li><strong>User Name:</strong> {mrfProfile.userName}</li>
+                                <li><strong>First Name:</strong> {mrfProfile.firstName}</li>
+                                <li><strong>Last Name:</strong> {mrfProfile.lastName}</li>
+                                <li><strong>District:</strong> {mrfProfile.district}</li>
+                                <li><strong>Local Authority:</strong> {mrfProfile.localAuthority}</li>
+                                <li><strong>Id/Passport Number:</strong> {mrfProfile.idOrPassportNumber}</li>
+                                <li><strong>Collecting Location Address:</strong> {mrfProfile.collectingLocationAddress}
+                                </li>
+                                <li><strong>Telephone:</strong> {mrfProfile.telephone}</li>
+                                <li><strong>GPS Location:</strong> {mrfProfile.gpsLocation}</li>
                             </ul>
                         </div>
                     )}
                 </div>
 
+
                 <div className="mrf-container">
-
-
                     <div className="row">
                         <div className="col-3"></div>
                         <div className="col-2">

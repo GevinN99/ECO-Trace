@@ -1,6 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {PrivateRouteAdmin, PrivateRouteCEA, PrivateRouteMRF} from './utils/PrivateRoute';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginPage from "./components/LoginPage";
 import WelcomePage from "./components/WelcomePage";
 import CreateAdminPage from "./components/AdminDashboard/CreateAdminPage";
@@ -30,6 +31,8 @@ import AdminMRFDashboard from "./components/AdminDashboard/Admin-MRFDashboard";
 import AdminSupplierPage from "./components/AdminDashboard/Admin-SupplierPage";
 import Footer from "./components/Footer";
 import CEAPDF from "./components/CEADashboard/CEAPDF";
+import SupplierProfile from "./components/MRFDashboard/SupplierProfile";
+import SupplierPDF from "./components/CEADashboard/SupplierPDF";
 
 
 function App() {
@@ -61,8 +64,10 @@ function App() {
                     <Route path="/SupplierCollection" element={<SupplierCollection/>}/>
                     <Route path="/CreateSupplier" element={<CreateSupplier/>}/>
                     <Route path="/ViewAllSuppliers" element={<SupplierPage/>}/>
+                    <Route path={"/SupplierProfile/:supplierId"} element={<SupplierProfile/>}/>
                     <Route path="/AddCategorizedData" element={<CategoryCreation/>}/>
                     <Route path="/MRFNavBar" element={<MRFNavBar/>}/>
+                    <Route path="/SupplierPDF" element={<SupplierPDF/>}/>
                 </Route>
 
                 {/*  CEA Dashboard  */}
